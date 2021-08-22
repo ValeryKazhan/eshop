@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $purchases = \App\Models\Order::find(1)->purchases;
+    $purchases = json_decode($purchases, true);
+    return var_dump($purchases);
 });
