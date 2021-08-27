@@ -24,7 +24,7 @@
     <div class="main_menu">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
-                <a class="navbar-brand logo_h" href="index.blade.php"><img src="img/logo.png" alt=""></a>
+                <a class="navbar-brand logo_h" href="/"><img src="img/logo.png" alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon-bar"></span>
@@ -33,41 +33,28 @@
                 </button>
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="index.blade.php">Home</a></li>
-                        <li class="nav-item active submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="category.blade.php">Shop Category</a></li>
-                                <li class="nav-item"><a class="nav-link" href="single-product.blade.php">Product Details</a></li>
-                                <li class="nav-item"><a class="nav-link" href="checkout.blade.php">Product Checkout</a></li>
-                                <li class="nav-item"><a class="nav-link" href="confirmation.blade.php">Confirmation</a></li>
-                                <li class="nav-item"><a class="nav-link" href="cart.blade.php">Shopping Cart</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Blog</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="blog.blade.php">Blog</a></li>
-                                <li class="nav-item"><a class="nav-link" href="single-blog.blade.php">Blog Details</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Pages</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="login.blade.php">Login</a></li>
-                                <li class="nav-item"><a class="nav-link" href="register.blade.php">Register</a></li>
-                                <li class="nav-item"><a class="nav-link" href="tracking-order.blade.php">Tracking</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="contact.blade.php">Contact</a></li>
+                        <x-li-link href="/">Home</x-li-link>
+{{--                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>--}}
+                        @auth
+                            <x-dropdown :name="auth()->user()->name">
+                                <x-li-link href="/">Tracking</x-li-link>
+                                <x-li-link href="/">My Orders</x-li-link>
+                            </x-dropdown>
+
+                            <x-li-link href="/logout">Log Out</x-li-link>
+                        @else
+                            <x-li-link href="/login">Login</x-li-link>
+                            <x-li-link href="/register">Register</x-li-link>
+                        @endauth
+
+
                     </ul>
 
                     <ul class="nav-shop">
-                        <li class="nav-item"><button><i class="ti-search"></i></button></li>
-                        <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
+                        <li><x-search-field-global/></li>
+{{--                        <li class="nav-item"><button><i class="ti-search"></i></button></li>--}}
+
+                        <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">{{($bucket = session()->get('bucket')) ? count($bucket) : ''}}</span></button> </li>
                         <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
                     </ul>
                 </div>
@@ -100,7 +87,7 @@
                     <div class="single-footer-widget tp_widgets">
                         <h4 class="footer_title">Quick Links</h4>
                         <ul class="list">
-                            <li><a href="#">Home</a></li>
+                            <li><a href="/">Home</a></li>
                             <li><a href="#">Shop</a></li>
                             <li><a href="#">Blog</a></li>
                             <li><a href="#">Product</a></li>

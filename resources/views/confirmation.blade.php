@@ -56,8 +56,8 @@
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Pages</a>
                 <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="login.blade.php">Login</a></li>
-                  <li class="nav-item"><a class="nav-link" href="register.blade.php">Register</a></li>
+                  <li class="nav-item"><a class="nav-link" href="user/login.blade.php">Login</a></li>
+                  <li class="nav-item"><a class="nav-link" href="user/register.blade.php">Register</a></li>
                   <li class="nav-item"><a class="nav-link" href="tracking-order.blade.php">Tracking</a></li>
                 </ul>
               </li>

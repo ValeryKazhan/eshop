@@ -11,6 +11,13 @@ class Category extends Model
 
     protected $guarded = [];
 
+    public function scopeFilter($query){
+        if(request('search')){
+            $query
+                ->where('name', 'like', $search = ('%'.request('search').'%'));
+        }
+    }
+
 
     public function products(){
         return $this->hasMany(Product::class);

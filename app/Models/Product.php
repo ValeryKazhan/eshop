@@ -9,6 +9,14 @@ class Product extends Model
 {
     use HasFactory;
 
+    public function scopeFilter($query){
+        if(request('search')){
+            $query
+                ->where('name', 'like', $search = ('%'.request('search').'%'));
+                //->orWhere('description', 'like', $search);
+        }
+    }
+
 
     protected $guarded=[];
 

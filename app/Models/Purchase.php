@@ -17,5 +17,8 @@ class Purchase
         $this->number = $number;
     }
 
+    public function add($number){
+        $this->number+=$number;
+    }
 
 }

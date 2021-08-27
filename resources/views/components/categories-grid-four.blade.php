@@ -1,17 +1,17 @@
-@props(['name' => 'Products', 'products'])
+@props(['name' => 'Categories', 'categories'])
 
 <section class="section-margin calc-60px">
     <div class="container">
         <div class="section-intro pb-60px">
-            <p>Popular Item in the market</p>
+{{--            <p>Popular Item in the market</p>--}}
             <h2><span class="section-intro__style">{{$name}}</span></h2>
         </div>
         <div class="row">
 
-            @foreach($products as $product)
+            @foreach($categories as $category)
                 <div class="col-md-6 col-lg-4 col-xl-3">
-                    <x-product-grid-item
-                        :product="$product"
+                    <x-category-grid-item
+                        :category="$category"
                     />
                 </div>
             @endforeach
