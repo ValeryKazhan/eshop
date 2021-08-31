@@ -4,10 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
     use HasFactory;
+    protected $guarded=[];
+
+    public function getNameAttribute($name){
+        return ucwords($name);
+    }
 
     public function scopeFilter($query){
         if(request('search')){
@@ -17,8 +23,45 @@ class Product extends Model
         }
     }
 
+    public static function bestSold(int $take = null){
 
-    protected $guarded=[];
+        $sortBy = 'sold';
+        $orders = Order::all();//can be modified by created at to take orders from certain time, this method also needs cache
+        $products = array();
+
+        foreach (Product::all() as $product){
+            $products[$product->id] = [
+                'product'=> $product,
+                'sold' => 0
+            ];
+        }
+
+        foreach ($orders as $order){
+            foreach ($order->purchases as $purchase){
+                $products[$purchase->product->id]['sold']+=$purchase->number;
+            }
+        }
+
+        usort($products, function ($item1, $item2) use ($sortBy) {
+            if ($item1[$sortBy] == $item2[$sortBy]) return 0;
+                return $item1[$sortBy] > $item2[$sortBy] ? -1 : 1;
+
+        });
+
+        if($take){
+            $products = array_slice($products, 0, $take);
+        }
+
+        foreach ($products as $key=>$product){
+            $products[$key] = $product['product'];
+        }
+
+        return $products;
+    }
+
+
+
+
 
     public function rating(){//cache in the future
          $sum = 0;

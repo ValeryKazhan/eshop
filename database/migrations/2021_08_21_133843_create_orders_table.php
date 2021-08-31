@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id');
             $table->boolean('is_delivered')->default(false);
             $table->json('purchases');
+            $table->json('contacts');
             $table->timestamps();
         });
     }

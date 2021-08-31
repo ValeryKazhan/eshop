@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -11,24 +12,25 @@ class Order extends Model
 
     protected $guarded = [];
 
+    public function setContactsAttribute($contacts){
+        $this->attributes['contacts'] = json_encode($contacts);
+    }
+    public function getContactsAttribute($contacts){
+        return json_decode($contacts, true);
+    }
+
     public function getPurchasesAttribute($purchases){
         $purchases = json_decode($purchases, true);
-        $idArray = array_keys($purchases);
-        $purchases = array_values($purchases);
-
-
-        for($i=0; $i<count($idArray); $i++){
-            $purchases[$i] = new Purchase($idArray[$i], $purchases[$i]);
-        }
-        return $purchases;
+        return Purchase::toRelatedArray($purchases);
     }
 
     public function setPurchasesAttribute($purchases){
+        $purchases = Purchase::toIdArray($purchases);
         $this->attributes['purchases'] = json_encode($purchases);
     }
 
     public function customer(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 }

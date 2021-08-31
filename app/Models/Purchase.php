@@ -21,4 +21,31 @@ class Purchase
         $this->number+=$number;
     }
 
+    public function getCost(){
+        return $this->product->price * $this->number;
+    }
+
+    public static function toRelatedArray(array $idArray){
+        $relatedArray = array();
+        foreach ($idArray as $productId=>$number){
+            if(self::numberIsCorrect($number))
+                array_push($relatedArray, new Purchase($productId, $number));
+        }
+        return $relatedArray;
+    }
+
+    public static function toIdArray(array $relatedArray){
+        $idArray = array();
+        foreach ($relatedArray as $purchase){
+            $idArray[$purchase->product->id] = $purchase->number;
+        }
+        return $idArray;
+    }
+
+    private static function numberIsCorrect($number){
+        return $number > 0;
+    }
+
+
+
 }

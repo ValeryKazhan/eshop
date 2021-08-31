@@ -1,3 +1,5 @@
+@props(['cart'=> \App\Models\Cart::getPurchases()])
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,9 +41,10 @@
                             <x-dropdown :name="auth()->user()->name">
                                 <x-li-link href="/">Tracking</x-li-link>
                                 <x-li-link href="/">My Orders</x-li-link>
+                                <x-li-link href="/logout">Log Out</x-li-link>
                             </x-dropdown>
 
-                            <x-li-link href="/logout">Log Out</x-li-link>
+
                         @else
                             <x-li-link href="/login">Login</x-li-link>
                             <x-li-link href="/register">Register</x-li-link>
@@ -53,9 +56,12 @@
                     <ul class="nav-shop">
                         <li><x-search-field-global/></li>
 {{--                        <li class="nav-item"><button><i class="ti-search"></i></button></li>--}}
-
-                        <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">{{($bucket = session()->get('bucket')) ? count($bucket) : ''}}</span></button> </li>
-                        <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
+                        <li class="nav-item">
+                            <a href="/cart" class="mr-3">
+                                <button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">{{$cart ? count($cart) : ''}}</span></button>
+                            </a>
+                        </li>
+                        <x-order-link-button/>
                     </ul>
                 </div>
             </div>

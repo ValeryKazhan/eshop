@@ -4,7 +4,7 @@
 {{--        <x-product-banner/>--}}
 
         <div class="section-intro pb-60px text-center mt-5">
-            <h2><span class="section-intro__style">Our Products</span></h2>
+            <h2><span class="section-intro__style">Our Best Sellers</span></h2>
         </div>
 
         <x-carousel>

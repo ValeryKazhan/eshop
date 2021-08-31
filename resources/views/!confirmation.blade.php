@@ -40,7 +40,7 @@
                   <li class="nav-item"><a class="nav-link" href="category.blade.php">Shop Category</a></li>
                   <li class="nav-item"><a class="nav-link" href="single-product.blade.php">Product Details</a></li>
                   <li class="nav-item"><a class="nav-link" href="checkout.blade.php">Product Checkout</a></li>
-                  <li class="nav-item"><a class="nav-link" href="confirmation.blade.php">Confirmation</a></li>
+                  <li class="nav-item"><a class="nav-link" href="!confirmation.blade.php">Confirmation</a></li>
                   <li class="nav-item"><a class="nav-link" href="cart.blade.php">Shopping Cart</a></li>
                 </ul>
 							</li>

@@ -13,7 +13,7 @@
     </div>
     <div class="card-body">
 {{--        <p>{{$category->name}}</p>--}}
-        <h4 class="card-product__title"><a href="/category/{{$category->slug}}">{{ucwords($category->name)}}</a></h4>
+        <h4 class="card-product__title"><a href="/category/{{$category->slug}}">{{ucwords($category->name).'('.count($category->products).')'}}</a></h4>
 {{--        <p class="card-product__price">${{$product->price}}</p>--}}
     </div>
 </div>
