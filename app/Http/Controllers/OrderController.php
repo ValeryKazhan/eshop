@@ -50,7 +50,7 @@ class OrderController extends Controller
 
         Cart::clear();
 
-        dd($order);
+        return redirect('/order/'.$order->id);
     }
 
 }

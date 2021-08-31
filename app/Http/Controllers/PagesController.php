@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -23,8 +24,8 @@ class PagesController extends Controller
         ]);
     }
 
-    public function searchResult(){
-        return view('search-result', [
+    public function searchPage(){
+        return view('search-page', [
             'products' => Product::query()->filter()->get(),
             'categories' => Category::query()->filter()->get()
         ]);
@@ -37,11 +38,17 @@ class PagesController extends Controller
         ]);
     }
 
-
-
     public function cart(){
         return view('cart', [
             'purchases' => Cart::getPurchases()
+        ]);
+    }
+
+    public function order(Order $order){
+        if(!$order->belongsToAuth())
+            return abort(403);
+        return view('order', [
+            'order' => $order
         ]);
     }
 

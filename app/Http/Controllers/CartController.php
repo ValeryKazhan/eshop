@@ -13,7 +13,7 @@ class CartController extends Controller
     public function add(){
         $attributes = request()->validate([
             'product_id' => ['required', Rule::exists('products', 'id')],
-            'number' => ['required']
+            'number' => ['required', 'digits_between:1,2']
         ]);
         Cart::addPurchase($attributes['product_id'], $attributes['number']);
         return back();

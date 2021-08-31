@@ -33,4 +33,17 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function belongsToAuth(): bool
+    {
+        return $this->customer->id == auth()->id();
+    }
+
+    public function getTotalCost(){
+        $totalCost=0;
+        foreach ($this->purchases as $purchase){
+            $totalCost+=$purchase->getCost();
+        }
+        return $totalCost;
+    }
+
 }

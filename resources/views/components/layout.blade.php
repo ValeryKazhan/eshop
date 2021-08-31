@@ -39,8 +39,7 @@
 {{--                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>--}}
                         @auth
                             <x-dropdown :name="auth()->user()->name">
-                                <x-li-link href="/">Tracking</x-li-link>
-                                <x-li-link href="/">My Orders</x-li-link>
+                                <x-li-link href="/my-orders">My Orders</x-li-link>
                                 <x-li-link href="/logout">Log Out</x-li-link>
                             </x-dropdown>
 

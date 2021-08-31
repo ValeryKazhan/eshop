@@ -47,7 +47,7 @@
                                                 <p style="width: 120px">{{ucwords($purchase->product->name)}}</p>
                                             </div>
                                         </a>
-                                        <x-link-humble href="/purchase/{{$id}}/delete">
+                                        <x-link-humble href="/cart/purchase/{{$id}}/delete">
                                             DELETE
                                         </x-link-humble>
 

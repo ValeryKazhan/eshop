@@ -6,7 +6,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
-use App\Models\Cart;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,19 +25,20 @@ Route::get('/dump', function () {
 });
 
 Route::get('/', [PagesController::class, 'index']);
-
 Route::get('/category/{category:slug}', [PagesController::class, 'category']);
-
 Route::get('/product/{product:slug}', [PagesController::class, 'product']);
+Route::post('/product/{product:slug}/comment', [CommentController::class, 'store'])->middleware('auth');
+Route::post('/product/{product:slug}/review', [ReviewController::class, 'store'])->middleware('auth');
 
-Route::post('/product/{product:slug}/add', [CartController::class, 'add']);
 Route::get('/cart', [PagesController::class, 'cart']);
+Route::post('/cart/product/{product:slug}/add', [CartController::class, 'add']);
 Route::post('/cart/store' , [CartController::class, 'store']);
 Route::get('/cart/clear', [CartController::class, 'destroy']);
-Route::get('/purchase/{id}/delete', [CartController::class, 'remove']);
+Route::get('/cart/purchase/{id}/delete', [CartController::class, 'remove']);
 
-Route::get('/order/create', [OrderController::class, 'create']);
-Route::post('/order/store', [OrderController::class, 'store']);
+Route::get('/order/create', [OrderController::class, 'create'])->middleware('auth');
+Route::post('/order/store', [OrderController::class, 'store'])->middleware('auth');
+Route::get('/order/{order}', [PagesController::class, 'order'])->middleware('auth');
 
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');
 Route::post('/register', [UserController::class, 'store'])->middleware('guest');
@@ -50,7 +52,7 @@ Route::get('/logout', [SessionController::class, 'destroy'])->middleware('auth')
 
 
 
-Route::get('/search-result', [PagesController::class, 'searchResult']);
+Route::get('/search-result', [PagesController::class, 'searchPage']);
 
 
 

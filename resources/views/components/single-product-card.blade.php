@@ -25,7 +25,7 @@
 {{--                        <li><a href="#"><span>Availibility</span> : In Stock</a></li>--}}
                     </ul>
                     <p>{{$product->description}}</p>
-                    <form method="POST" action="/product/{{$product->slug}}/add">
+                    <form method="POST" action="/cart/product/{{$product->slug}}/add">
                         @csrf
                         <input type="hidden" id="product_id" name="product_id" value="{{$product->id}}">
                         <div class="product_count">
