@@ -14,7 +14,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>№</th>
+                            <th scope="col">№</th>
                             <th scope="col">Product</th>
                             <th scope="col">Price</th>
                             <th scope="col">Quantity</th>
@@ -50,30 +50,12 @@
                                         <x-link-humble href="/cart/purchase/{{$id}}/delete">
                                             DELETE
                                         </x-link-humble>
-
-{{--                                        <x-link-button href="/purchase/{{$id}}/delete">--}}
-{{--                                            Delete--}}
-{{--                                        </x-link-button>--}}
                                     </td>
                                     <td>
                                         <h5 style="width: 100px">${{$purchase->product->price}}</h5>
                                     </td>
                                     <td>
-                                        <div class="product_count">
-                                            <input type="text" name="{{$purchase->product->id}}" id="sst{{$id}}" maxlength="12"
-                                                   value="{{$purchase->number}}" title="Quantity:"
-                                                   class="input-text qty">
-                                            <button
-                                                onclick="var result{{$id}} = document.getElementById('sst{{$id}}');var sst{{$id}} = result{{$id}}.value;if( !isNaN( sst{{$id}} )) result{{$id}}.value++;return false;"
-                                                class="increase items-count" type="button">
-                                                <i class="lnr lnr-chevron-up"></i>
-                                            </button>
-                                            <button
-                                                onclick="var result{{$id}} = document.getElementById('sst{{$id}}');var sst{{$id}} = result{{$id}}.value;if( !isNaN( sst{{$id}} ) &amp;&amp; sst{{$id}} > 0 ) result{{$id}}.value--;return false;"
-                                                class="reduced items-count" type="button">
-                                                <i class="lnr lnr-chevron-down"></i>
-                                            </button>
-                                        </div>
+                                        <x-quantity-input :name="$purchase->product->id" :id="$purchase->product->id" :value="$purchase->number"/>
                                     </td>
                                     <td>
                                         <h5>${{$purchase->getCost()}}</h5>

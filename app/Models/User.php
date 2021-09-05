@@ -48,6 +48,61 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
+    public function getWishlistAttribute($wishlist){
+        $wishlist = json_decode($wishlist, true);
+        if($wishlist == null)
+            $wishlist = $this->resetWishList();
+        foreach ($wishlist as $key=>$productId) {
+            $wishlist[$key] = Product::find($productId);
+        }
+        return $wishlist;
+    }
+
+    public function setWishlistAttribute(array $wishlist){
+        foreach ($wishlist as $key=>$product){
+            $wishlist[$key] = $product->id;
+        }
+        $this->attributes['wishlist'] = json_encode($wishlist);
+    }
+
+    public function setWishlist($wishlist){
+        $this->update(['wishlist' => $wishlist]);
+    }
+
+    public function addToWishlist(Product $product){
+
+        $isInWishlist = false;
+        $wishlist = $this->wishlist;
+        if(!$wishlist)
+            $wishlist = array();
+        foreach ($wishlist as $wishlistProduct){
+            if($product->id == $wishlistProduct->id){
+                $isInWishlist = true;
+                break;
+            }
+        }
+        if(!$isInWishlist){
+            array_push($wishlist, $product);
+            $this->update(['wishlist' => $wishlist]);
+        }
+        $this->setWishlist($wishlist);
+
+    }
+
+    public function removeFromWishlist(Product $product){
+        $wishlist = $this->wishlist;
+        if (($key = array_search($product, $wishlist))!==false) {
+            unset($wishlist[$key]);
+            $this->setWishlist($wishlist);
+        }
+    }
+
+    public function resetWishList(){
+        $this->update(['wishlist' => array()]);
+        return array();
+    }
+
+
     public function reviews(){
         return $this->hasMany(Review::class);
     }
@@ -59,5 +114,10 @@ class User extends Authenticatable
     public function orders(){
         return $this->hasMany(Order::class);
     }
+
+    public function wishlist(){
+        return $this->hasMany(Product::class);
+    }
+
 
 }

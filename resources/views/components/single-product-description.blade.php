@@ -37,9 +37,15 @@
                         <x-product-comments :comments="$product->comments"/>
                     </div>
                     <div class="col-lg-6">
-                        <x-single-product-comment-form
-                            :product="$product"
-                        />
+                        @auth
+                        <x-single-product-comment-form :product="$product"/>
+                        @else
+                            <div class="text-center mr-5 mb-5 mt-5">
+                                <h4>To leave a comment</h4>
+                            </div>
+
+                            <x-login-or-register/>
+                        @endauth
                     </div>
                 </div>
             </x-single-product.section>
@@ -51,7 +57,16 @@
                         <x-single-product-reviews :reviews="$product->reviews"/>
                     </div>
                     <div class="col-lg-6">
-                        <x-single-product-review-form :product="$product"/>
+                        @auth
+                            <x-single-product-review-form :product="$product"/>
+                        @else
+
+                                <div class="text-center mr-5 mb-5 mt-5">
+                                    <h4>To leave the review</h4>
+                                </div>
+
+                                <x-login-or-register/>
+                        @endauth
                     </div>
                 </div>
             </x-single-product.section>

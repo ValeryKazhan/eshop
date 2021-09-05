@@ -1,14 +1,20 @@
-<div>
-    <form method="GET" action="/search-result">
+<form method="GET" action="/search-result">
+<li class="nav-item ml-0">
+
     <div class="input-group filter-bar-search" >
 
             <input type="text" name="search" placeholder="Search">
-            <div class="input-group-append">
-                <button type="submit"><i class="ti-search"></i></button>
-            </div>
-
-
+{{--            <div class="input-group-append">--}}
+{{--                <button type="submit"><i class="ti-search"></i></button>--}}
+{{--            </div>--}}
 
     </div>
-    </form>
-</div>
+
+
+</li>
+
+   <button type="submit"><i class="ti-search"></i></button>
+</form>
+
+
+

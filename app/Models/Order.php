@@ -46,4 +46,12 @@ class Order extends Model
         return $totalCost;
     }
 
+    public function getItemsNumber(){
+        $itemsNumber = 0;
+        foreach ($this->purchases as $purchase){
+            $itemsNumber+=$purchase->number;
+        }
+        return $itemsNumber;
+    }
+
 }

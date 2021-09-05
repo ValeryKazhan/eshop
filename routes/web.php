@@ -21,9 +21,15 @@ use App\Http\Controllers\ReviewController;
 */
 
 Route::get('/dump', function () {
-    dd(\App\Models\Product::bestSold(6));
+//    $wishlist = auth()->user()->wishlist;
+//    dd($wishlist);
+//    $wishlist = array();
+//    array_push($wishlist, \App\Models\Product::find(2));
+//    auth()->user()->update(['wishlist' => $wishlist]);
+//    auth()->user()->clearWishList();
+//    dd(auth()->user()->wishlist);
+    dd(auth()->user()->wishlist);
 });
-
 Route::get('/', [PagesController::class, 'index']);
 Route::get('/category/{category:slug}', [PagesController::class, 'category']);
 Route::get('/product/{product:slug}', [PagesController::class, 'product']);
@@ -40,11 +46,16 @@ Route::get('/order/create', [OrderController::class, 'create'])->middleware('aut
 Route::post('/order/store', [OrderController::class, 'store'])->middleware('auth');
 Route::get('/order/{order}', [PagesController::class, 'order'])->middleware('auth');
 
+Route::get('/wishlist', [PagesController::class, 'wishlist'])->middleware('auth');
+Route::post('/wishlist/product/{product:slug}/add', [UserController::class, 'addToWishlist'])->middleware('auth');
+Route::post('/wishlist/product/{product:slug}/remove', [UserController::class, 'removeFromWishlist'])->middleware('auth');
+
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');
 Route::post('/register', [UserController::class, 'store'])->middleware('guest');
 
 Route::get('/login', [SessionController::class, 'create'])->middleware('guest');
 Route::post('/login', [SessionController::class, 'store'])->middleware('guest');
+Route::get('/my-account', [PagesController::class, 'myAccount'])->middleware('auth');
 
 Route::get('/logout', [SessionController::class, 'destroy'])->middleware('auth');
 

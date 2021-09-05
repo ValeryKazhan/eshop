@@ -29,7 +29,7 @@
                     onblur="this.placeholder = 'Username'"
                 >
             </x-input-field>
-            <x-error :name="'username'"/>
+            <x-error :id="'username'"/>
 
 
             <x-input-field>
@@ -43,7 +43,7 @@
                     onblur="this.placeholder = 'Name'"
                 >
             </x-input-field>
-            <x-error :name="'name'"/>
+            <x-error :id="'name'"/>
 
             <x-input-field>
                 <input type="email"
@@ -55,7 +55,7 @@
                        onblur="this.placeholder = 'Email Address'"
                 >
             </x-input-field>
-            <x-error :name="'email'"/>
+            <x-error :id="'email'"/>
 
             <x-input-field>
                 <input
@@ -68,7 +68,7 @@
                     onblur="this.placeholder = 'Password'"
                 >
             </x-input-field>
-            <x-error :name="'password'"/>
+            <x-error :id="'password'"/>
 
             {{--                            LEAVE IT FOR LATER--}}
             {{--                            <x-input-field>--}}
@@ -87,15 +87,7 @@
             </div>
             <div class="col-md-12 form-group">
                 <button type="submit" class="button button-register w-100">Register</button>
-
-                @if ($errors->any())
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li class="text-red-500 text-xs">{{$error}}</li>
-                        @endforeach
-                    </ul>
-                @endif
-
+                <x-errors/>
             </div>
         </form>
 

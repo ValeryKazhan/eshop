@@ -1,4 +1,4 @@
-@props(['cart'=> \App\Models\Cart::getPurchases()])
+@props(['cart'=> \App\Models\Cart::getPurchases(), 'wishlist' => auth()->user()->wishlist])
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,9 +36,11 @@
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
                         <x-li-link href="/">Home</x-li-link>
-{{--                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>--}}
                         @auth
-                            <x-dropdown :name="auth()->user()->name">
+                            <x-dropdown :name="auth()->user()->name" href="/my-account">
+                                <x-li-link href="/my-account">My Account</x-li-link>
+                                <x-li-link href="/cart">My Cart</x-li-link>
+                                <x-li-link href="/wishlist">My Wishlist</x-li-link>
                                 <x-li-link href="/my-orders">My Orders</x-li-link>
                                 <x-li-link href="/logout">Log Out</x-li-link>
                             </x-dropdown>
@@ -53,13 +55,19 @@
                     </ul>
 
                     <ul class="nav-shop">
-                        <li><x-search-field-global/></li>
-{{--                        <li class="nav-item"><button><i class="ti-search"></i></button></li>--}}
+                        <li class="nav-item"><x-search-field-global/></li>
+
+                        <li class="nav-item">
+                            <a href="/wishlist">
+                                <button><i class="ti-heart"></i><span class="nav-shop__circle">{{$wishlist ? count($wishlist) : ''}}</span></button>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="/cart" class="mr-3">
                                 <button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">{{$cart ? count($cart) : ''}}</span></button>
                             </a>
                         </li>
+
                         <x-order-link-button/>
                     </ul>
                 </div>

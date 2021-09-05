@@ -22,7 +22,7 @@
                     onblur="this.placeholder = 'Username'"
                 >
             </x-input-field>
-
+            <x-error :id="'email'"/>
 
             <x-input-field>
                 <input
@@ -35,6 +35,8 @@
                     onblur="this.placeholder = 'Password'"
                 >
             </x-input-field>
+            <x-error :id="'password'"/>
+
             <div class="col-md-12 form-group">
 {{--                <x-input-checkbox/>--}}
             </div>

@@ -18,7 +18,7 @@
 
 
 
-            <x-purchase-table :purchases="$purchases" :name="'Crate New Order'"/>
+            <x-purchases-table :purchases="$purchases" :name="'Crate New Order'"/>
 
 
 

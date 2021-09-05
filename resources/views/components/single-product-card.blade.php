@@ -8,12 +8,12 @@
                     <div class="single-prd-item">
                         <img class="img-fluid" src="/img/category/s-p1.jpg" alt="">
                     </div>
-                    <!-- <div class="single-prd-item">
+                    <div class="single-prd-item">
                         <img class="img-fluid" src="img/category/s-p1.jpg" alt="">
                     </div>
                     <div class="single-prd-item">
                         <img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-                    </div> -->
+                    </div>
                 </div>
             </div>
             <div class="col-lg-5 offset-lg-1">
@@ -22,32 +22,27 @@
                     <h2>${{$product->price}}</h2>
                     <ul class="list">
                         <li><a class="active" href="/category/{{$product->category->slug}}"><span>Category</span> : {{ucwords($product->category->name)}}</a></li>
-{{--                        <li><a href="#"><span>Availibility</span> : In Stock</a></li>--}}
                     </ul>
                     <p>{{$product->description}}</p>
+                    <div class="col-md-6">
                     <form method="POST" action="/cart/product/{{$product->slug}}/add">
                         @csrf
-                        <input type="hidden" id="product_id" name="product_id" value="{{$product->id}}">
                         <div class="product_count">
                             <label for="number">Quantity:</label>
-                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                    class="increase items-count" type="button"
-{{--                                    style="margin-right: 178px; margin-top: 38px"--}}
-                            ><i class="ti-angle-right"></i></button>
-                            <input type="text" name="number" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                    class="reduced items-count" type="button"
-{{--                                    style="margin-right: 240px;"--}}
-                            ><i class="ti-angle-left"></i></button>
-
-{{--                                <a class="button primary-btn" type="submit" href="#">Add to Cart</a>--}}
+                            <x-quantity-input value="1" id="number" name="number"/>
 
                         </div>
                         <x-submit-button>
                             Add to Cart
                         </x-submit-button>
                     </form>
-
+                    <form class="mt-3" method="POST" action="/wishlist/product/{{$product->slug}}/add">
+                        @csrf
+                        <x-submit-button>
+                            Add to Wishlist
+                        </x-submit-button>
+                    </form>
+                    </div>
                     <div class="card_area d-flex align-items-center">
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>

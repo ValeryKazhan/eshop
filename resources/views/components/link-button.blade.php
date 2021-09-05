@@ -1,1 +1,3 @@
-<a class="button button-login mr-5" {{$attributes->merge(['href'=>''])}}>{{$slot}}</a>
+@props(['class' => ''])
+
+<a class="button button-login mr-5 {{$class}}" {{$attributes->merge(['href'=>''])}}>{{$slot}}</a>

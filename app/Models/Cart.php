@@ -31,7 +31,7 @@ class Cart
         return count(self::getPurchases())==0;
     }
 
-    public static function addPurchase(int $productId, int $number)
+    public static function addProduct(int $productId, int $number)
     {
         $purchaseExists = false;
         $purchases = self::getPurchases();

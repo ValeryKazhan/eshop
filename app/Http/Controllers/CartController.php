@@ -6,16 +6,25 @@ use App\Models\Cart;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Models\Product;
+use Illuminate\Support\Facades\Route;
 
 class CartController extends Controller
 {
 
-    public function add(){
+    public function add(Product $product){
+
+
+        request()->merge(['id' => $product->id]);
         $attributes = request()->validate([
-            'product_id' => ['required', Rule::exists('products', 'id')],
+            'id' => ['required', Rule::exists('products', 'id')],
             'number' => ['required', 'digits_between:1,2']
         ]);
-        Cart::addPurchase($attributes['product_id'], $attributes['number']);
+
+        Cart::addProduct($attributes['id'], $attributes['number']);
+
+
+
         return back();
     }
 
