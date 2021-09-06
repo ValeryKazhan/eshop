@@ -1,4 +1,4 @@
-@props(['cart'=> \App\Models\Cart::getPurchases(), 'wishlist' => auth()->user()->wishlist])
+@props(['cart'=> \App\Models\Cart::getPurchases(), 'wishlist' => auth()->check() ? auth()->user()->wishlist : array()])
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,24 +44,33 @@
                                 <x-li-link href="/my-orders">My Orders</x-li-link>
                                 <x-li-link href="/logout">Log Out</x-li-link>
                             </x-dropdown>
-
-
                         @else
                             <x-li-link href="/login">Login</x-li-link>
                             <x-li-link href="/register">Register</x-li-link>
                         @endauth
+                        @admin
+                        <x-dropdown :name="'Admin Panel'" href="/admin">
+                            <x-li-link href="/admin/users">Users</x-li-link>
+                            <x-li-link href="/admin/products">Products</x-li-link>
+                            <x-li-link href="/admin/orders">Orders</x-li-link>
+                            <x-li-link href="/admin/categories">Categories</x-li-link>
+                            <x-li-link href="/admin/reviews">Reviews</x-li-link>
+                            <x-li-link href="/admin/comments">Comments</x-li-link>
+                        </x-dropdown>
+                        @endadmin
 
 
                     </ul>
 
                     <ul class="nav-shop">
                         <li class="nav-item"><x-search-field-global/></li>
-
+                        @auth
                         <li class="nav-item">
                             <a href="/wishlist">
                                 <button><i class="ti-heart"></i><span class="nav-shop__circle">{{$wishlist ? count($wishlist) : ''}}</span></button>
                             </a>
                         </li>
+                        @endauth
                         <li class="nav-item">
                             <a href="/cart" class="mr-3">
                                 <button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">{{$cart ? count($cart) : ''}}</span></button>

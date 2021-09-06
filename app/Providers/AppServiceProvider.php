@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\Admin;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::if('admin', function(){
+            if(auth()->guest())
+                return false;
+            return auth()->user()->is_admin;
+        });
     }
 }

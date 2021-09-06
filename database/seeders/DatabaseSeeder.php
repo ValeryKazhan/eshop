@@ -38,5 +38,13 @@ class DatabaseSeeder extends Seeder
             'password' => 'password' // password
             ]
         );
+
+        $admin = User::create(
+            ['name' => 'Valery Kazhan',
+                'username' => 'valerykazhan',
+                'email' => 'wolera1@mail.ru',
+                'is_admin' => true,
+                'password' => 'password' // password
+            ]);
     }
 }

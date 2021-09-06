@@ -19,7 +19,7 @@
                     name="email"
                     placeholder="Email"
                     onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = 'Username'"
+                    onblur="this.placeholder = 'Email'"
                 >
             </x-input-field>
             <x-error :id="'email'"/>

@@ -31,7 +31,6 @@
             </x-input-field>
             <x-error :id="'username'"/>
 
-
             <x-input-field>
                 <input
                     type="text"

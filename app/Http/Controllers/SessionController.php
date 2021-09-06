@@ -21,6 +21,8 @@ class SessionController extends Controller
 
         if (auth()->attempt($attributes)){
             session()->regenerate();
+            if(auth()->user()->is_admin)
+                return redirect('/admin');
             return redirect('/')->with('success', 'Welcome Back');
         }
 

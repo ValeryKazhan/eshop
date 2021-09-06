@@ -14,7 +14,7 @@ class UpdateUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->json('wishlist')->nullable();
+            $table->json('wishlist')->default(array())->nullable();
         });
     }
 
