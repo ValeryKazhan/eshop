@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
@@ -17,13 +21,81 @@ class AdminController extends Controller
         return view('admin.categories');
     }
 
+
+
+
     public function orders(){
-        return view('admin.orders');
+        return view('admin.orders', [
+            'orders' => Order::all()
+        ]);
     }
 
     public function products(){
-        return view('admin.products');
+        return view('admin.products', [
+            'products' => Product::with('category')->get()
+        ]);
     }
+    public function categoryProducts(Category $category){
+        return view ('admin.products', [
+            'products' => $category->products,
+            'category' => $category
+        ]);
+    }
+
+    public function createProduct(){
+        return view('admin.product.create', [
+            'categories' => Category::all()
+        ]);
+    }
+
+    public function storeProduct(){
+
+        $attributes = request()->validate([
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+            'name' => ['required', 'max:255'],
+            'description' => ['required'],
+            'price' => ['required', 'digits_between:1,10', Rule::notIn(0)]
+        ]);
+
+        $attributes['slug'] = Str::slug($attributes['name']);
+
+        Product::create($attributes);
+        return redirect('/admin/products');
+    }
+
+    public function editProduct(Product $product){
+        return view('admin.product.create', [
+            'product' => $product,
+            'categories' => Category::all()
+        ]);
+    }
+
+    public function updateProduct($id){
+
+        $attributes = request()->validate([
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+            'slug' => ['required', Rule::unique('products', 'slug')->ignore($id)],
+            'name' => ['required', 'max:255'],
+            'description' => ['required'],
+            'price' => ['required', 'digits_between:1,10', Rule::notIn(0)]
+        ]);
+
+        DB::table('products')->where('id', '=', $id)->update($attributes);
+        return redirect('/admin/products');
+    }
+
+    public function destroyProduct($id){
+        DB::table('products')->where('id', '=', $id)->delete();
+        return redirect('/admin/products');
+    }
+
+    public function editProductSpecification(Product $product){
+        return view('admin.product.editProductSpecification', [
+            'product' => $product
+        ]);
+    }
+
+
 
     public function comments(){
         return view ('admin.comments');
@@ -76,7 +148,6 @@ class AdminController extends Controller
         DB::table('users')->where('id', '=', $id)->update($attributes);
         return redirect('/admin/users');
     }
-
 
     public function destroyUser($id){
         DB::table('users')->where('id', '=', $id)->delete();

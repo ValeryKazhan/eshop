@@ -1,4 +1,4 @@
-@props(['columns'])
+@props(['columns' => array()])
 
 <tr>
     @foreach($columns as $column)

@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\DocBlock\Tags\Author;
 
 class PagesController extends Controller
 {
@@ -59,6 +60,18 @@ class PagesController extends Controller
         return view('my-account', [
             'user' => auth()->user(),
             'activeOrders' => auth()->user()->orders->where('is_delivered', false)
+        ]);
+    }
+
+    public function myOrders(){
+        $activeOrders = array();
+        $completedOrders = array();
+        foreach (auth()->user()->orders as $order){
+            $order->is_delivered? array_push($completedOrders, $order) : array_push($activeOrders, $order);
+        }
+        return view('my-orders', [
+            'activeOrders' => $activeOrders,
+            'completedOrders' => $completedOrders
         ]);
     }
 

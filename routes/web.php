@@ -45,6 +45,7 @@ Route::get('/wishlist', [PagesController::class, 'wishlist'])->middleware('auth'
 Route::post('/wishlist/product/{product:slug}/add', [UserController::class, 'addToWishlist'])->middleware('auth');
 Route::post('/wishlist/product/{product:slug}/remove', [UserController::class, 'removeFromWishlist'])->middleware('auth');
 Route::get('/my-account', [PagesController::class, 'myAccount'])->middleware('auth');
+Route::get('/my-orders', [PagesController::class, 'myOrders'])->middleware('auth');
 
 
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');
@@ -64,8 +65,21 @@ Route::get('/admin/user/{user}/edit', [AdminController::class, 'editUser'])->mid
 Route::post('/admin/user/{user}/update', [AdminController::class, 'updateUser'])->middleware('admin');
 
 Route::get('/admin/products', [AdminController::class, 'products'])->middleware('admin');
+Route::get('/admin/category/{category}/products', [AdminController::class, 'categoryProducts'])->middleware('admin');
+Route::get('/admin/product/create', [AdminController::class, 'createProduct'])->middleware('admin');
+Route::post('/admin/product/store', [AdminController::class, 'storeProduct'])->middleware('admin');
+Route::get('/admin/product/{product}/delete', [AdminController::class, 'destroyProduct'])->middleware('admin');
+Route::get('/admin/product/{product}/edit', [AdminController::class, 'editProduct'])->middleware('admin');
+Route::post('/admin/product/{product}/update', [AdminController::class, 'updateProduct'])->middleware('admin');
+Route::get('/admin/product/{product}/specification/edit', [AdminController::class, 'editProductSpecification'])->middleware('admin');
+
+
 Route::get('/admin/orders', [AdminController::class, 'orders'])->middleware('admin');
+Route::get('/admin/order/{order}', [AdminController::class, 'orders'])->middleware('admin');
+
 Route::get('/admin/categories', [AdminController::class, 'categories'])->middleware('admin');
+
+
 Route::get('/admin/comments', [AdminController::class, 'comments'])->middleware('admin');
 Route::get('/admin/reviews', [AdminController::class, 'reviews'])->middleware('admin');
 

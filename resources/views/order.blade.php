@@ -5,7 +5,7 @@
     <section class="order_details section-margin--small">
         <div class="container">
             <p class="text-center billing-alert" {{$order->is_delivered ? ''  : 'style=color:#d01d33'}}>{{$order->is_delivered ? 'Thank you. Your
-                order has been received.': 'Order is active. Has not been reveived'}}</p>
+                order has been received.': 'Order is active. Has not been received'}}</p>
             <x-order-props :order="$order"/>
             <x-purchases-table :purchases="$order->purchases" :name="'Order id: '.$order->id"/>
 
