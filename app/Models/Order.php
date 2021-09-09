@@ -54,4 +54,14 @@ class Order extends Model
         return $itemsNumber;
     }
 
+    public function contactsToString(): string
+    {
+
+        $string = '';
+        foreach ($this->contacts as $key=>$value){
+            $string.=$key.':'.$value.'; ';
+        }
+        return $string;
+    }
+
 }

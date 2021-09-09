@@ -18,7 +18,7 @@
             </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
-                    <h3>{{ucwords($product->name)}}</h3>
+                    <h3>{{$product->name}}</h3>
                     <h2>${{$product->price}}</h2>
                     <ul class="list">
                         <li><a class="active" href="/category/{{$product->category->slug}}"><span>Category</span> : {{ucwords($product->category->name)}}</a></li>

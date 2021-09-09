@@ -36,7 +36,7 @@
                     </td>
                     <td>
 
-                        {{json_encode($order->contacts)}}
+                        {{$order->contactsToString()}}
                     </td>
                     <td>
                         ${{$order->getTotalCost()}}

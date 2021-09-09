@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -93,6 +94,43 @@ class AdminController extends Controller
         return view('admin.product.editProductSpecification', [
             'product' => $product
         ]);
+    }
+
+    public function updateProductSpecification(Product $product){
+
+            Utils::backIfNoRequest();
+            $validationRules = ['required', 'max:5'];
+            $validationArray = array();
+
+            foreach ($product->specification as $key=>$value){
+                $validationArray[$key] = $validationRules;
+            }
+
+            $attributes = \request()->validate($validationArray);
+            $product->setSpecification($attributes);
+            return redirect('/admin/product/'.$product->id.'/specification/edit');
+
+    }
+
+    public function addProductSpecification(Product $product){
+        return view('admin.product.addProductSpecification', [
+            'product' => $product
+        ]);
+    }
+
+    public function removeProductSpecification(Product $product, $key){
+        $product->removeSpecification($key);
+        return back();
+    }
+
+    public function storeProductSpecification(Product $product){
+        Utils::backIfNoRequest();
+        $attributes = \request()->validate([
+           'key' => ['required', Rule::notIn($product->specification)],
+            'value' => ['required']
+        ]);
+        $product->addSpecification($attributes['key'], $attributes['value']);
+        return redirect('/admin/product/'.$product->id.'/specification/edit');
     }
 
 

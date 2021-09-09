@@ -72,7 +72,10 @@ Route::get('/admin/product/{product}/delete', [AdminController::class, 'destroyP
 Route::get('/admin/product/{product}/edit', [AdminController::class, 'editProduct'])->middleware('admin');
 Route::post('/admin/product/{product}/update', [AdminController::class, 'updateProduct'])->middleware('admin');
 Route::get('/admin/product/{product}/specification/edit', [AdminController::class, 'editProductSpecification'])->middleware('admin');
-
+Route::post('/admin/product/{product}/specification/update', [AdminController::class, 'updateProductSpecification'])->middleware('admin');
+Route::get('/admin/product/{product}/specification/add', [AdminController::class, 'addProductSpecification'])->middleware('admin');
+Route::post('/admin/product/{product}/specification/add', [AdminController::class, 'storeProductSpecification'])->middleware('admin');
+Route::get('/admin/product/{product}/specification/{key}/remove', [AdminController::class, 'removeProductSpecification'])->middleware('admin');
 
 Route::get('/admin/orders', [AdminController::class, 'orders'])->middleware('admin');
 Route::get('/admin/order/{order}', [AdminController::class, 'orders'])->middleware('admin');
