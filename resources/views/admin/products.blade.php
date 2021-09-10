@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Admin Panel">
     <div class="mt-5">
         <x-admin-table
             :columns="[
@@ -35,7 +35,7 @@
                         {{$product->description}}
                     </td>
                     <td>
-                        {{$product->specification}}
+                        <a href="/admin/product/{{$product->id}}/specification/edit">Edit</a>
                     </td>
                     <td>
                         ${{$product->price}}
@@ -54,6 +54,10 @@
             @endforeach
 
         </x-admin-table>
+        <div class="mt-3 mb-3">
+            {{$products->links()}}
+        </div>
+
     </div>
 
 </x-layout>

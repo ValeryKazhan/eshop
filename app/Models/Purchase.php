@@ -10,11 +10,13 @@ class Purchase
 {
     public Product $product;
     public int $number;
+    public int $price;
 
-    public function __construct(int $productId, int $number)
+    public function __construct(Product $product, int $number)
     {
-        $this->product = Product::find($productId);
+        $this->product = $product;
         $this->number = $number;
+        $this->price = $product->price;
     }
 
     public function add($number){
@@ -27,8 +29,10 @@ class Purchase
 
     public static function toRelatedArray(array $idArray){
         $relatedArray = array();
-        foreach ($idArray as $productId=>$number){
-            if(self::numberIsCorrect($number))
+        foreach ($idArray as $productId=>$attributes){
+            $number = $attributes['number'];
+            $price = $attributes['price'];
+            if(self::numberIsCorrect($number) and self::priceIsCorrect($price))
                 array_push($relatedArray, new Purchase($productId, $number));
         }
         return $relatedArray;
@@ -37,13 +41,16 @@ class Purchase
     public static function toIdArray(array $relatedArray){
         $idArray = array();
         foreach ($relatedArray as $purchase){
-            $idArray[$purchase->product->id] = $purchase->number;
+            $idArray[$purchase->product->id] = ['number' => $purchase->number, 'price' => $purchase->price];
         }
         return $idArray;
     }
 
     private static function numberIsCorrect($number){
         return $number > 0;
+    }
+    private static function priceIsCorrect($price){
+        return $price > 0;
     }
 
 

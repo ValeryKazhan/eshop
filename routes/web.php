@@ -78,7 +78,8 @@ Route::post('/admin/product/{product}/specification/add', [AdminController::clas
 Route::get('/admin/product/{product}/specification/{key}/remove', [AdminController::class, 'removeProductSpecification'])->middleware('admin');
 
 Route::get('/admin/orders', [AdminController::class, 'orders'])->middleware('admin');
-Route::get('/admin/order/{order}', [AdminController::class, 'orders'])->middleware('admin');
+Route::get('/admin/user/{user}/orders', [AdminController::class, 'userOrders'])->middleware('admin');
+
 
 Route::get('/admin/categories', [AdminController::class, 'categories'])->middleware('admin');
 

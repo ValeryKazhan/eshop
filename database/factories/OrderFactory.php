@@ -30,9 +30,9 @@ class OrderFactory extends Factory
         return [
             'user_id' => User::factory(),
             'purchases' => [
-                new Purchase($product1->id, 4),
-                new Purchase($product2->id, 5),
-                new Purchase($product3->id, 6)
+                new Purchase($product1, 4),
+                new Purchase($product2, 5),
+                new Purchase($product3, 6)
             ],
             'contacts' => [
                 'country' => 'Vcountry',

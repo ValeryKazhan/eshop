@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Admin Panel">
     <div class="mt-5">
         <x-admin-table
             :columns="['Id',
@@ -35,6 +35,11 @@
             @endforeach
 
         </x-admin-table>
+        <x-mtmb>
+            {{$users->links()}}
+        </x-mtmb>
+
+
     </div>
 
 </x-layout>

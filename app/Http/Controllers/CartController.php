@@ -21,7 +21,7 @@ class CartController extends Controller
             'number' => ['required', 'digits_between:1,2']
         ]);
 
-        Cart::addProduct($attributes['id'], $attributes['number']);
+        Cart::addProduct(Product::find($attributes['id']), $attributes['number']);
 
 
 

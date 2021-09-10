@@ -31,20 +31,20 @@ class Cart
         return count(self::getPurchases())==0;
     }
 
-    public static function addProduct(int $productId, int $number)
+    public static function addProduct(Product $product, int $number)
     {
         $purchaseExists = false;
         $purchases = self::getPurchases();
 
         foreach ($purchases as $purchase) {
-            if ($purchase->product->id == $productId) {
+            if ($purchase->product->id == $product->id) {
                 $purchase->add($number);
                 $purchaseExists = true;
                 break;
             }
         }
 
-        !$purchaseExists ? array_push($purchases, new Purchase($productId, $number)) : null;
+        !$purchaseExists ? array_push($purchases, new Purchase($product, $number)) : null;
         self::setPurchases($purchases);
     }
 

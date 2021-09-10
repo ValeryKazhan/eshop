@@ -34,7 +34,7 @@
                 </td>
 
                 <td>
-                    <p>${{$purchase->product->price}}</p>
+                    <p>${{$purchase->price}}</p>
                 </td>
 
                 <td>

@@ -14,6 +14,8 @@ use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
+    const ITEMS_PER_PAGE = 40;
+
     public function menu(){
         return view('admin.menu');
     }
@@ -27,18 +29,75 @@ class AdminController extends Controller
 
     public function orders(){
         return view('admin.orders', [
-            'orders' => Order::all()
+            'orders' => Order::paginate(self::ITEMS_PER_PAGE)
         ]);
     }
 
+    public function userOrders(User $user){
+        return view ('admin.orders', [
+            'user' => $user,
+            'orders' => Order::where('user_id', $user->id)->paginate(self::ITEMS_PER_PAGE)
+        ]);
+    }
+
+    public function createOrder(){
+        return view('admin.product.create', [
+            'categories' => Category::all()
+        ]);
+    }
+
+    public function storeOrder(){
+
+        $attributes = request()->validate([
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+            'name' => ['required', 'max:255'],
+            'description' => ['required'],
+            'price' => ['required', 'digits_between:1,10', Rule::notIn(0)]
+        ]);
+
+        $attributes['slug'] = Str::slug($attributes['name']);
+
+        Product::create($attributes);
+        return redirect('/admin/products');
+    }
+
+    public function editOrder(Product $product){
+        return view('admin.product.create', [
+            'product' => $product,
+            'categories' => Category::all()
+        ]);
+    }
+
+    public function updateOrder($id){
+
+        Utils::backIfNoRequest();
+        $attributes = request()->validate([
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+            'slug' => ['required', Rule::unique('products', 'slug')->ignore($id)],
+            'name' => ['required', 'max:255'],
+            'description' => ['required'],
+            'price' => ['required', 'digits_between:1,10', Rule::notIn(0)]
+        ]);
+
+        DB::table('products')->where('id', '=', $id)->update($attributes);
+        return redirect('/admin/products');
+    }
+
+    public function destroyOrder($id){
+        DB::table('products')->where('id', '=', $id)->delete();
+        return redirect('/admin/products');
+    }
+
+
+
     public function products(){
         return view('admin.products', [
-            'products' => Product::with('category')->get()
+            'products' => Product::with('category')->paginate(self::ITEMS_PER_PAGE)
         ]);
     }
     public function categoryProducts(Category $category){
         return view ('admin.products', [
-            'products' => $category->products,
+            'products' => Product::where('category_id', $category->id)->paginate(self::ITEMS_PER_PAGE),
             'category' => $category
         ]);
     }
@@ -73,6 +132,7 @@ class AdminController extends Controller
 
     public function updateProduct($id){
 
+        Utils::backIfNoRequest();
         $attributes = request()->validate([
             'category_id' => ['required', Rule::exists('categories', 'id')],
             'slug' => ['required', Rule::unique('products', 'slug')->ignore($id)],
@@ -147,7 +207,7 @@ class AdminController extends Controller
 
     public function users(){
         return view('admin.users', [
-            'users' => User::all()
+            'users' => User::query()->paginate(40)
         ]);
     }
 

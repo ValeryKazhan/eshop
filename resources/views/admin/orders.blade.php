@@ -3,7 +3,7 @@
         <x-admin-table
             :columns="[
         'Id',
-        isset($customer)? 'Customer - '.$customer->username : 'Customer' ,
+        isset($user)? 'Customer - '.$user->username : 'Customer' ,
         'Is Delivered',
         'Items',
         'Contacts',
@@ -50,12 +50,15 @@
                     <td>
                         <a href="/admin/order/{{$order->id}}/delete">DELETE</a>
                         <a href="/admin/order/{{$order->id}}/edit">EDIT</a>
-                        <a href="/admin/order/{{$order->id}}">DETAILS</a>
+                        <a href="/admin/order/{{$order->id}}/edit">DETAILS</a>
                     </td>
                 </x-admin-table-row>
             @endforeach
 
         </x-admin-table>
+        <x-mtmb>
+            {{$orders->links()}}
+        </x-mtmb>
     </div>
 
 </x-layout>
