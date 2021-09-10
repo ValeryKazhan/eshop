@@ -28,12 +28,13 @@ class Purchase
     }
 
     public static function toRelatedArray(array $idArray){
-        $relatedArray = array();
+        $relatedArray = [];
         foreach ($idArray as $productId=>$attributes){
+
             $number = $attributes['number'];
             $price = $attributes['price'];
             if(self::numberIsCorrect($number) and self::priceIsCorrect($price))
-                array_push($relatedArray, new Purchase($productId, $number));
+                array_push($relatedArray, new Purchase(Product::find($productId), $number));
         }
         return $relatedArray;
     }

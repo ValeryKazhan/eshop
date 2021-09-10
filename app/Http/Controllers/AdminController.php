@@ -41,36 +41,25 @@ class AdminController extends Controller
     }
 
     public function createOrder(){
-        return view('admin.product.create', [
-            'categories' => Category::all()
-        ]);
+        return view('admin.order.create');
     }
 
     public function storeOrder(){
+        dd(\request()->all());
 
-        $attributes = request()->validate([
-            'category_id' => ['required', Rule::exists('categories', 'id')],
-            'name' => ['required', 'max:255'],
-            'description' => ['required'],
-            'price' => ['required', 'digits_between:1,10', Rule::notIn(0)]
-        ]);
-
-        $attributes['slug'] = Str::slug($attributes['name']);
-
-        Product::create($attributes);
         return redirect('/admin/products');
     }
 
-    public function editOrder(Product $product){
-        return view('admin.product.create', [
-            'product' => $product,
-            'categories' => Category::all()
+    public function editOrder(Order $order){
+        return view('admin.order.create', [
+            'order' => $order
         ]);
     }
 
     public function updateOrder($id){
 
         Utils::backIfNoRequest();
+
         $attributes = request()->validate([
             'category_id' => ['required', Rule::exists('categories', 'id')],
             'slug' => ['required', Rule::unique('products', 'slug')->ignore($id)],

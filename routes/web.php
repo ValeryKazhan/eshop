@@ -23,7 +23,7 @@ use App\Http\Controllers\AdminController;
 */
 
 Route::get('/dump', function () {
-
+    dd(\App\Models\Cart::getPurchases());
 });
 Route::get('/', [PagesController::class, 'index']);
 Route::get('/category/{category:slug}', [PagesController::class, 'category']);
@@ -31,11 +31,14 @@ Route::get('/product/{product:slug}', [PagesController::class, 'product']);
 Route::post('/product/{product:slug}/comment', [CommentController::class, 'store'])->middleware('auth');
 Route::post('/product/{product:slug}/review', [ReviewController::class, 'store'])->middleware('auth');
 
-Route::get('/cart', [PagesController::class, 'cart']);
-Route::post('/cart/product/{product:slug}/add', [CartController::class, 'add']);
-Route::post('/cart/store' , [CartController::class, 'store']);
-Route::get('/cart/clear', [CartController::class, 'destroy']);
-Route::get('/cart/purchase/{id}/delete', [CartController::class, 'remove']);
+Route::group(['prefix' => '/cart'], function () {
+    Route::get('', [PagesController::class, 'cart']);
+    Route::post('/product/{product:slug}/add', [CartController::class, 'add']);
+    Route::post('/store' , [CartController::class, 'store']);
+    Route::get('/clear', [CartController::class, 'destroy']);
+    Route::get('/purchase/{id}/delete', [CartController::class, 'remove']);
+});
+
 
 Route::get('/order/create.blade.php', [OrderController::class, 'create'])->middleware('auth');
 Route::post('/order/store', [OrderController::class, 'store'])->middleware('auth');
@@ -79,7 +82,11 @@ Route::get('/admin/product/{product}/specification/{key}/remove', [AdminControll
 
 Route::get('/admin/orders', [AdminController::class, 'orders'])->middleware('admin');
 Route::get('/admin/user/{user}/orders', [AdminController::class, 'userOrders'])->middleware('admin');
-
+Route::get('/admin/order/create', [AdminController::class, 'createOrder'])->middleware('admin');
+Route::post('/admin/order/store', [AdminController::class, 'storeOrder'])->middleware('admin');
+Route::get('/admin/order/{order}/delete', [AdminController::class, 'destroyOrder'])->middleware('admin');
+Route::get('/admin/order/{order}/edit', [AdminController::class, 'editOrder'])->middleware('admin');
+Route::post('/admin/order/{order}/update', [AdminController::class, 'updateOrder'])->middleware('admin');
 
 Route::get('/admin/categories', [AdminController::class, 'categories'])->middleware('admin');
 

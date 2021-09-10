@@ -22,7 +22,7 @@ class Cart
     public static function getPurchases()
     {
         if (session()->get(self::KEY) == null)
-            self::setPurchases(array());
+            self::setPurchases([]);
 
         return session()->get(self::KEY);
     }

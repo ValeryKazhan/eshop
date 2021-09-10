@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -23,13 +24,13 @@ class OrderController extends Controller
 
     }
 
-    public function store()
+    public function store(Request $request)
     {
 
         if (Cart::isEmpty())
             return redirect('/cart');
 
-        $contacts = request()->validate([
+        $contacts = $request->validate([
                 "country" => ['required', 'max:50', 'min:2'],
                 "region" => ['max:255'],
                 "locality" => ['required', 'max:50', 'min:2'],
