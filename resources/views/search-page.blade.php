@@ -8,7 +8,7 @@
         $productsName = NO.$productsName;
 @endphp
 
-<x-layout>
+<x-layout title="Search">
     <h3 class="text-center" style="margin-top: 100px">
         Searching "{{request('search')}}"...
     </h3>

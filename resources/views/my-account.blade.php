@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Account">
     <x-start-banner :pageName="'Personal Account'" :header="$user->name"/>
     <div class="container mt-5 mb-5">
         <div class="row">

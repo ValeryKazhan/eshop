@@ -23,7 +23,7 @@
     }
 @endphp
 
-<x-layout>
+<x-layout title="Admin Panel">
     <x-start-banner header="Admin Panel" :pageName="$pageName"/>
     <div class="container mt-5">
 

@@ -30,7 +30,17 @@ class ProductFactory extends Factory
             'slug' => Str::slug($name),
             'name' => $name,
             'description' => $this->faker->paragraph(5),
-            'price' => $this->faker->numberBetween(100, 1000)
+            'price' => $this->faker->numberBetween(100, 1000),
+            'specification' => [
+                'Width' => '128mm',
+                'Height' => '508mm',
+                'Depth' => '85mm',
+                'Weight' => '52gm',
+                'Quality checking' => 'yes',
+                'Freshness Duration' => '03days',
+                'When packeting' => 'Without touch of hand',
+                'Each Box contains' => '60pcs'
+            ]
         ];
     }
 }

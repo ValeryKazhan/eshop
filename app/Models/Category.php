@@ -11,6 +11,10 @@ class Category extends Model
 
     protected $guarded = [];
 
+    public function getNameAttribute($name){
+        return ucwords($name);
+    }
+
     public function scopeFilter($query){
         if(request('search')){
             $query

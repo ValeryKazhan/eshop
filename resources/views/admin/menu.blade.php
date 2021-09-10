@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Admin Panel">
     <x-start-banner pageName="Admin Panel" header="Admin Panel"/>
 <div class="text-center mt-5 mb-5">
     <x-link-button href="/admin/users">Users</x-link-button>

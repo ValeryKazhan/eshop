@@ -21,7 +21,7 @@ class PagesController extends Controller
     public function category(Category $category){
         return view ('category', [
             'currentCategory' => $category,
-            'products' => Product::query()->where('category_id', $category->id)->filter()->get(),//->filter(),
+            'products' => Product::query()->where('category_id', $category->id)->filter()->paginate(9),//->filter(),
             'categories' => Category::all()
         ]);
     }
@@ -38,7 +38,7 @@ class PagesController extends Controller
     public function index(){
         return view ('index', [
             'products' => Product::bestSold(10),
-            'categories' => Category::all()
+            'categories' => Category::query()->paginate(8)
         ]);
     }
 

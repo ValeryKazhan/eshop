@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Wishlist">
     <x-start-banner :header="'Wishlist'" :pageName="'Wishlist'"/>
     @if(!$products)
         <h1 class="text-center mt-5">You have no items in your wishlist now</h1>

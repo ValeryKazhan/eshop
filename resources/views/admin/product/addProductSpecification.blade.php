@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Admin Panel">
     <x-start-banner header="Admin Panel" pageName="Edit Specification of product {{$product->id}}"/>
     <div class="container mt-5">
 

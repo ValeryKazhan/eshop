@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Register">
 
     <x-start-banner
         :header="'Register'"

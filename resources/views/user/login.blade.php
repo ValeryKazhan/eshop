@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Log In">
     <x-start-banner :header="'Login'" :pageName="'Login'"/>
 
     <x-login-area>

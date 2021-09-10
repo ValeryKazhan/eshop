@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Order {{$order->id}}">
     <x-start-banner :header="'Order Page'" :pageName="'Order №'.$order->id"/>
 
 

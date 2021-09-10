@@ -43,10 +43,7 @@
                         </x-submit-button>
                     </form>
                     </div>
-                    <div class="card_area d-flex align-items-center">
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
-                    </div>
+
                 </div>
             </div>
         </div>

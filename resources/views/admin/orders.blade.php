@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Admin Panel">
     <div class="mt-5">
         <x-admin-table
             :columns="[

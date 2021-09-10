@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="$currentCategory->name">
 
     <x-start-banner
         :header="$currentCategory->name"
@@ -14,12 +14,10 @@
 
         <x-slot name="sidebar">
             <x-sidebar-categories :categories="$categories"/>
-{{--            <x-sidebar-filter/>--}}
+
         </x-slot>
-
+        {{$products->links()}}
     </x-category-section>
-
-    <x-products-related-grid/>
 
    <x-subscribe-panel/>
 

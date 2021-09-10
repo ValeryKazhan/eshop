@@ -1,4 +1,4 @@
-<x-layout :cart="$purchases">
+<x-layout :cart="$purchases" title="Cart">
 
     <x-start-banner
         :header="'Shopping Cart'"

@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Create Order">
     <x-start-banner :header="'Order Registration'" :pageName="'Order Registration'"/>
 
     <!--================Order Details Area =================-->

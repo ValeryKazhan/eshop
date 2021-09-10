@@ -10,11 +10,7 @@
                 </div>
                 <div class="media-body">
                     <h4>{{$review->author->name}}</h4>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                    Rating: {{$review->rating}}
                 </div>
             </div>
             <p>{{$review->body}}</p>

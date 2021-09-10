@@ -37,7 +37,7 @@
                 <ul class="dropdown-menu">
                   <li class="nav-item"><a class="nav-link" href="category.blade.php">Shop Category</a></li>
                   <li class="nav-item"><a class="nav-link" href="single-product.blade.php">Blog Details</a></li>
-                  <li class="nav-item"><a class="nav-link" href="checkout.blade.php">Product Checkout</a></li>
+                  <li class="nav-item"><a class="nav-link" href="unused/checkout.blade.php">Product Checkout</a></li>
                   <li class="nav-item"><a class="nav-link" href="!confirmation.blade.php">Confirmation</a></li>
                   <li class="nav-item"><a class="nav-link" href="cart.blade.php">Shopping Cart</a></li>
                 </ul>
@@ -46,7 +46,7 @@
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Blog</a>
                 <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="blog.blade.php">Blog</a></li>
+                  <li class="nav-item"><a class="nav-link" href="unused/blog.blade.php">Blog</a></li>
                   <li class="nav-item"><a class="nav-link" href="single-blog.blade.php">Blog Details</a></li>
                 </ul>
 							</li>
@@ -60,7 +60,7 @@
                   <!-- <li class="nav-item"><a class="nav-link" href="single-blog.blade.php">Blog Details</a></li> -->
                 </ul>
               </li>
-              <li class="nav-item"><a class="nav-link" href="contact.blade.php">Contact</a></li>
+              <li class="nav-item"><a class="nav-link" href="unused/contact.blade.php">Contact</a></li>
             </ul>
 
             <ul class="nav-shop">

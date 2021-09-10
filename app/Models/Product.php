@@ -17,14 +17,17 @@ class Product extends Model
         return ucwords($name);
     }
 
-    public function getSpecificationAttribute($specification): array
+    public function getSpecificationAttribute($specification)
     {
-        if (!$specification)
+       //dd($specification);
+        if (!$specification){
             $specification = $this->resetSpecification();
+            return $specification;
+        }
         return json_decode($specification, true);
     }
 
-    public function setSpecificationAttribute(array $specification): void
+    public function setSpecificationAttribute($specification): void
     {
         $this->attributes['specification'] = json_encode($specification);
     }

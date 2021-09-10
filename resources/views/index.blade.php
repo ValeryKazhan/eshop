@@ -1,7 +1,5 @@
-<x-layout>
+<x-layout title="Home">
     <main class="site-main">
-
-{{--        <x-product-banner/>--}}
 
         <div class="section-intro pb-60px text-center mt-5">
             <h2><span class="section-intro__style">Our Best Sellers</span></h2>
@@ -20,12 +18,9 @@
         <x-categories-grid-four
             :categories="$categories"
         />
-
-        <x-offer/>
-
-{{--        <x-products-grid-four/>--}}
-
-{{--        <x-blog-section/>--}}
+        <div style="justify-content: center">
+            {{$categories->links()}}
+        </div>
 
         <x-subscribe-panel/>
 

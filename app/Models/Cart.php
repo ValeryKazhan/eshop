@@ -54,6 +54,12 @@ class Cart
         self::setPurchases($purchases);
     }
 
-
+    public static function getItemsNumber(){
+        $itemsNumber = 0;
+        foreach (Cart::getPurchases() as $purchase){
+            $itemsNumber+=$purchase->number;
+        }
+        return $itemsNumber;
+    }
 
 }

@@ -28,7 +28,7 @@
             </x-single-product.section>
 
             <x-single-product.section :section="'profile'">
-                <x-single-product-specification/>
+                <x-single-product-specification :specification="$product->specification"/>
             </x-single-product.section>
 
             <x-single-product.section :section="'contact'">
@@ -64,13 +64,11 @@
                                 <div class="text-center mr-5 mb-5 mt-5">
                                     <h4>To leave the review</h4>
                                 </div>
-
                                 <x-login-or-register/>
                         @endauth
                     </div>
                 </div>
             </x-single-product.section>
-
         </div>
     </div>
 </section>
