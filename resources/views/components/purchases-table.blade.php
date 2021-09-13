@@ -30,11 +30,11 @@
                 </td>
 
                 <td>
-                    <p style="width: 50px">{{ucwords($purchase->product->name)}}</p>
+                    <p style="width: 50px">{{$purchase->product->name}}</p>
                 </td>
 
                 <td>
-                    <p>${{$purchase->price}}</p>
+                    <p>${{$purchase->getPrice()}}</p>
                 </td>
 
                 <td>

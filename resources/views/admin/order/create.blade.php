@@ -3,7 +3,7 @@
     if(isset($order)){
         $isDelivered = $order->is_delivered;
         $contacts = $order->contacts;
-        $pageName = 'Update Order '.$product->name;
+        $pageName = 'Update Order '.$order->id;
         $action = '/admin/order/'.$order->id.'/update';
         $buttonWord = 'Update';
     } else{
@@ -28,7 +28,6 @@
                     type="text"
                     id="country"
                     name="contacts[country]"
-                    value="{{}}"
                     required
                 >
                 <x-error :id="'country'"/>

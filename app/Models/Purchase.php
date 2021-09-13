@@ -11,33 +11,56 @@ class Purchase
 {
     public Product $product;
     public int $number;
-    public int $price;
+    private int $price;
+    private bool $priceIsUnchangeable;
 
-    public function __construct(Product $product, int $number)
+    public function __construct(Product $product, int $number, bool $priceIsUnchangeable = false)
     {
         if(self::numberIsCorrect($number) and self::priceIsCorrect($product->price)){
             $this->product = $product;
             $this->number = $number;
-            $this->price = $product->price;
+            $this->priceIsUnchangeable = $priceIsUnchangeable;
         } else{
             throwException('the number or price is not correct');
         }
 
     }
 
+    public function makePriceUnchangeable()
+    {
+        $this->priceIsUnchangeable = true;
+        $this->price = $this->product->price;
+    }
+
+    public function priceIsUnchangeable() : bool
+    {
+        return $this->priceIsUnchangeable;
+    }
+
+    public function getPrice() : int
+    {
+        if($this->priceIsUnchangeable())
+            return $this->price;
+        else
+            return $this->product->price;
+    }
+
     public function add($number){
         $this->number+=$number;
     }
 
-    public function getCost(){
+    public function getCost() : int
+    {
         return $this->product->price * $this->number;
     }
 
-    public static function toRelatedArray(array $idArray){
+    public static function toRelatedArray(array $idArray) : array
+    {
         $relatedArray = [];
         foreach ($idArray as $productId=>$attributes){
             $number = $attributes['number'];
-            array_push($relatedArray, new Purchase(Product::find($productId), $number));
+            $priceIsUnchangeable = $attributes['priceIsUnchangeable'];
+            array_push($relatedArray, new Purchase(Product::find($productId), $number, $priceIsUnchangeable));
         }
         return $relatedArray;
     }
@@ -45,7 +68,7 @@ class Purchase
     public static function toIdArray(array $relatedArray){
         $idArray = array();
         foreach ($relatedArray as $purchase){
-            $idArray[$purchase->product->id] = ['number' => $purchase->number, 'price' => $purchase->price];
+            $idArray[$purchase->product->id] = ['number' => $purchase->number, 'price' => $purchase->getPrice(), 'priceIsUnchangeable' => $purchase->priceIsUnchangeable()];
         }
         return $idArray;
     }

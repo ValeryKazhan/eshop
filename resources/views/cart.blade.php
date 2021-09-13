@@ -52,7 +52,7 @@
                                         </x-link-humble>
                                     </td>
                                     <td>
-                                        <h5 style="width: 100px">${{$purchase->price}}</h5>
+                                        <h5 style="width: 100px">${{$purchase->getPrice()}}</h5>
                                     </td>
                                     <td>
                                         <x-quantity-input :name="$purchase->product->id" :id="$purchase->product->id" :value="$purchase->number"/>
