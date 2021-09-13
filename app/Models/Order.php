@@ -12,6 +12,15 @@ class Order extends Model
 
     protected $guarded = [];
 
+    public function resetPurchasesIfNull(){
+        if($this->purchases == null)
+            $this->resetPurchases();
+    }
+
+    public function resetPurchases(){
+        $this->update(['purchases' => array()]);
+    }
+
     public function setContactsAttribute($contacts){
         $this->attributes['contacts'] = json_encode($contacts);
     }
@@ -20,13 +29,21 @@ class Order extends Model
     }
 
     public function getPurchasesAttribute($purchases){
-        $purchases = json_decode($purchases, true);
-        return Purchase::toRelatedArray($purchases);
+        return $purchases = json_decode($purchases, true);
     }
 
     public function setPurchasesAttribute($purchases){
-        $purchases = Purchase::toIdArray($purchases);
         $this->attributes['purchases'] = json_encode($purchases);
+    }
+
+    public function getPurchasesModels(){
+
+        return Purchase::toRelatedArray($this->purchases);
+    }
+
+    public function setPurchasesModels($purchases){
+        $purchases = Purchase::toIdArray($purchases);
+        $this->update(['purchases' => $purchases]);
     }
 
     public function customer(){
@@ -40,7 +57,7 @@ class Order extends Model
 
     public function getTotalCost(){
         $totalCost=0;
-        foreach ($this->purchases as $purchase){
+        foreach ($this->getPurchasesModels() as $purchase){
             $totalCost+=$purchase->getCost();
         }
         return $totalCost;
@@ -48,7 +65,7 @@ class Order extends Model
 
     public function getItemsNumber(){
         $itemsNumber = 0;
-        foreach ($this->purchases as $purchase){
+        foreach ($this->getPurchasesModels() as $purchase){
             $itemsNumber+=$purchase->number;
         }
         return $itemsNumber;

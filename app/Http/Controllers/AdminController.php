@@ -45,7 +45,6 @@ class AdminController extends Controller
     }
 
     public function storeOrder(){
-        dd(\request()->all());
 
         return redirect('/admin/products');
     }

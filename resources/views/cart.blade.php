@@ -27,16 +27,16 @@
                             @csrf
                             @php
                                 $totalCost=0;
-                                $№=0;
+                                $N=0;
                             @endphp
 
                             @foreach($purchases as $id=>$purchase)
                                 @php
                                     $totalCost+=$purchase->getCost();
-                                    $№++;
+                                    $N++;
                                 @endphp
                                 <tr>
-                                    <td><p>{{$№}}</p></td>
+                                    <td><p>{{$N}}</p></td>
 
                                     <td>
                                         <a class="media" href="/product/{{$purchase->product->slug}}">
@@ -44,7 +44,7 @@
                                                 <img src="img/cart/cart1.png" alt="">
                                             </div>
                                             <div class="media-body">
-                                                <p style="width: 120px">{{ucwords($purchase->product->name)}}</p>
+                                                <p style="width: 120px">{{$purchase->product->name}}</p>
                                             </div>
                                         </a>
                                         <x-link-humble href="/cart/purchase/{{$id}}/delete">
@@ -55,7 +55,7 @@
                                         <h5 style="width: 100px">${{$purchase->price}}</h5>
                                     </td>
                                     <td>
-                                        <x-quantity-input :name="$purchase->product->id" :id="$purchase->product->id" :value="$purchase->number"/>
+                                        <x-quantity-input name="{{$purchase->product->id}}[number]" :id="$purchase->product->id" :value="$purchase->number"/>
                                     </td>
                                     <td>
                                         <h5>${{$purchase->getCost()}}</h5>
@@ -124,8 +124,6 @@
                             <td>
                                 <div class="checkout_btn_inner d-flex align-items-center">
                                     <x-order-link-button/>
-{{--                                    <a class="gray_btn" href="#">Continue Shopping</a>--}}
-{{--                                    <a class="primary-btn ml-2" href="#">Proceed to checkout</a>--}}
                                 </div>
                             </td>
                         </tr>
@@ -143,6 +141,19 @@
             </div>
         </div>
     </section>
-    <!--================End Cart Area =================-->
 
 </x-layout>
+
+{{--<script>--}}
+{{--    $.('#input-id').on('change', function () {--}}
+{{--        $.ajax({--}}
+{{--            type: "POST",--}}
+{{--            url: "/cart/store",--}}
+{{--            data: {--}}
+{{--                0: $(this).val()--}}
+{{--            }--}}
+{{--        })--}}
+{{--        --}}
+{{--    })--}}
+{{--    --}}
+{{--</script>--}}

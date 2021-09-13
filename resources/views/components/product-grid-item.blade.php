@@ -12,7 +12,7 @@
                 </form>
             </li>
 
-            @if(Route::current()->uri!='wishlist')
+            @if(!in_array($product->id, auth()->user()->wishlist))
             <li>
                 <form method="POST" action="/wishlist/product/{{$product->slug}}/add">
                     @csrf

@@ -37,6 +37,7 @@ class PagesController extends Controller
 
     public function index(){
         return view ('index', [
+//            'products' => Product::all(),
             'products' => Product::bestSold(10),
             'categories' => Category::query()->paginate(8)
         ]);

@@ -29,11 +29,14 @@ class OrderFactory extends Factory
         $product3 = Product::factory()->create(['description' => 'FROM ORDER FACTORY THIRD']);
         return [
             'user_id' => User::factory(),
-            'purchases' => [
-                new Purchase($product1, 4),
-                new Purchase($product2, 5),
-                new Purchase($product3, 6)
-            ],
+            'purchases' => Purchase::toIdArray(
+                    [
+                        new Purchase($product1, 4),
+                        new Purchase($product2, 5),
+                        new Purchase($product3, 6)
+                    ]
+                )
+            ,
             'contacts' => [
                 'country' => 'Vcountry',
                 'region' => 'Vregion',

@@ -78,7 +78,9 @@ class Product extends Model
         $orders = Order::all();//can be modified by created at to take orders from certain time, this method also needs cache
         $products = array();
 
+
         foreach (Product::all() as $product) {
+
             $products[$product->id] = [
                 'product' => $product,
                 'sold' => 0
@@ -86,7 +88,7 @@ class Product extends Model
         }
 
         foreach ($orders as $order) {
-            foreach ($order->purchases as $purchase) {
+            foreach ($order->getPurchasesModels() as $purchase) {
                 $products[$purchase->product->id]['sold'] += $purchase->number;
             }
         }

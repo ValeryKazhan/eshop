@@ -15,48 +15,55 @@ class Purchase
 
     public function __construct(Product $product, int $number)
     {
-        if(self::numberIsCorrect($number) and self::priceIsCorrect($product->price)){
+        if (self::numberIsCorrect($number) and self::priceIsCorrect($product->price)) {
             $this->product = $product;
             $this->number = $number;
             $this->price = $product->price;
-        } else{
+        } else {
             throwException('the number or price is not correct');
         }
-
     }
 
-    public function add($number){
-        $this->number+=$number;
+    public function add($number)
+    {
+        $this->number += $number;
     }
 
-    public function getCost(){
+    public function getCost()
+    {
         return $this->product->price * $this->number;
     }
 
-    public static function toRelatedArray(array $idArray){
+    public static function toRelatedArray(array $idArray): array
+    {
+
         $relatedArray = [];
-        foreach ($idArray as $productId=>$attributes){
+        foreach ($idArray as $productId => $attributes) {
             $number = $attributes['number'];
-            array_push($relatedArray, new Purchase(Product::find($productId), $number));
+            if (self::numberIsCorrect($number))
+                array_push($relatedArray, new Purchase(Product::find($productId), $number));
         }
         return $relatedArray;
     }
 
-    public static function toIdArray(array $relatedArray){
+    public static function toIdArray(array $relatedArray)
+    {
         $idArray = array();
-        foreach ($relatedArray as $purchase){
+        foreach ($relatedArray as $purchase) {
             $idArray[$purchase->product->id] = ['number' => $purchase->number, 'price' => $purchase->price];
         }
         return $idArray;
     }
 
-    private static function numberIsCorrect($number){
+    private static function numberIsCorrect($number)
+    {
         return $number > 0;
     }
-    private static function priceIsCorrect($price){
+
+    private static function priceIsCorrect($price)
+    {
         return $price > 0;
     }
-
 
 
 }
