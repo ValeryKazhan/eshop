@@ -1,4 +1,5 @@
 @props(['product'])
+
 <div class="card text-center card-product">
     <div class="card-product__img">
         <img class="card-img" src="/img/product/product2.png" alt="">
@@ -14,6 +15,7 @@
 
             @if(!in_array($product->id, auth()->user()->wishlist))
             <li>
+
                 <form method="POST" action="/wishlist/product/{{$product->slug}}/add">
                     @csrf
                     <button><i class="ti-heart"></i></button>

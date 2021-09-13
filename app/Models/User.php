@@ -68,6 +68,7 @@ class User extends Authenticatable
         foreach ($this->wishlist as $key=>$productId) {
             $wishlist[$key] = Product::find($productId);
         }
+        return $wishlist;
     }
 
     public function updateWishlistModels($wishlist){

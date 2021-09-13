@@ -78,7 +78,7 @@ class PagesController extends Controller
 
     public function wishlist(){
         return view('wishlist', [
-            'products' => auth()->user()->wishlist
+            'products' => auth()->user()->getWishlistModels()
         ]);
     }
 
