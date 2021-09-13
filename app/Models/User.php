@@ -65,7 +65,8 @@ class User extends Authenticatable
     }
 
     public function getWishlistModels(){
-        foreach ($this->wishlist as $key=>$productId) {
+        $wishlist = $this->wishlist;
+        foreach ($wishlist as $key=>$productId) {
             $wishlist[$key] = Product::find($productId);
         }
         return $wishlist;
