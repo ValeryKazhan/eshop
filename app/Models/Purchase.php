@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use App\Models\Product;
+use function PHPUnit\Framework\throwException;
 
 
 class Purchase
@@ -14,9 +15,14 @@ class Purchase
 
     public function __construct(Product $product, int $number)
     {
-        $this->product = $product;
-        $this->number = $number;
-        $this->price = $product->price;
+        if(self::numberIsCorrect($number) and self::priceIsCorrect($product->price)){
+            $this->product = $product;
+            $this->number = $number;
+            $this->price = $product->price;
+        } else{
+            throwException('the number or price is not correct');
+        }
+
     }
 
     public function add($number){
@@ -30,11 +36,8 @@ class Purchase
     public static function toRelatedArray(array $idArray){
         $relatedArray = [];
         foreach ($idArray as $productId=>$attributes){
-
             $number = $attributes['number'];
-            $price = $attributes['price'];
-            if(self::numberIsCorrect($number) and self::priceIsCorrect($price))
-                array_push($relatedArray, new Purchase(Product::find($productId), $number));
+            array_push($relatedArray, new Purchase(Product::find($productId), $number));
         }
         return $relatedArray;
     }
