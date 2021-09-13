@@ -8,7 +8,6 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\DocBlock\Tags\Author;
 
 class PagesController extends Controller
 {

@@ -49,14 +49,11 @@ class User extends Authenticatable
     }
 
     public function getWishlistAttribute($wishlist){
-
         $wishlist = json_decode($wishlist, true);
         if($wishlist == null){
             $this->resetWishList();
             $wishlist = array();
         }
-
-
         return $wishlist;
     }
 
