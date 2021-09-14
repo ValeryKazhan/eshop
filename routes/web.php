@@ -22,9 +22,6 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/dump', function () {
-    dd(\App\Models\Cart::getPurchases());
-});
 Route::get('/', [PagesController::class, 'index']);
 Route::get('/category/{category:slug}', [PagesController::class, 'category']);
 Route::get('/product/{product:slug}', [PagesController::class, 'product']);

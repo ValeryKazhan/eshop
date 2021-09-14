@@ -3,7 +3,6 @@
 
 namespace App\Models;
 
-use App\Models\Product;
 use function PHPUnit\Framework\throwException;
 
 

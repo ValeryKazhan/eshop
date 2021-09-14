@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Product;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Models\Product;
-use Illuminate\Support\Facades\Route;
 
 class CartController extends Controller
 {
 
-    public function add(Product $product){
+    public function add(Product $product, Request $request){
 
 
         request()->merge(['id' => $product->id]);
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'id' => ['required', Rule::exists('products', 'id')],
             'number' => ['required', 'digits_between:1,2']
         ]);
@@ -33,8 +32,8 @@ class CartController extends Controller
         return back();
     }
 
-    public function store(){
-        $purchases=request()->all();
+    public function store(Request $request){
+        $purchases=$request->all();
         unset($purchases['_token']);
         Cart::setPurchases(Purchase::toRelatedArray($purchases));
         return back();

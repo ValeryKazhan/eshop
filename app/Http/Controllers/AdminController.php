@@ -55,11 +55,11 @@ class AdminController extends Controller
         ]);
     }
 
-    public function updateOrder($id){
+    public function updateOrder($id, Request $request){
 
         Utils::backIfNoRequest();
 
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'category_id' => ['required', Rule::exists('categories', 'id')],
             'slug' => ['required', Rule::unique('products', 'slug')->ignore($id)],
             'name' => ['required', 'max:255'],
@@ -96,9 +96,9 @@ class AdminController extends Controller
         ]);
     }
 
-    public function storeProduct(){
+    public function storeProduct(Request $request){
 
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'category_id' => ['required', Rule::exists('categories', 'id')],
             'name' => ['required', 'max:255'],
             'description' => ['required'],
@@ -118,10 +118,10 @@ class AdminController extends Controller
         ]);
     }
 
-    public function updateProduct($id){
+    public function updateProduct($id, Request $request){
 
         Utils::backIfNoRequest();
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'category_id' => ['required', Rule::exists('categories', 'id')],
             'slug' => ['required', Rule::unique('products', 'slug')->ignore($id)],
             'name' => ['required', 'max:255'],
@@ -171,9 +171,9 @@ class AdminController extends Controller
         return back();
     }
 
-    public function storeProductSpecification(Product $product){
+    public function storeProductSpecification(Product $product, Request $request){
         Utils::backIfNoRequest();
-        $attributes = \request()->validate([
+        $attributes = $request->validate([
            'key' => ['required', Rule::notIn($product->specification)],
             'value' => ['required']
         ]);

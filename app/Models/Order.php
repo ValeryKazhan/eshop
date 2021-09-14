@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -32,12 +31,12 @@ class Order extends Model
         return $purchases = json_decode($purchases, true);
     }
 
-    public function setPurchasesAttribute($purchases){
+    public function setPurchasesAttribute($purchases) : void{
         $this->attributes['purchases'] = json_encode($purchases);
     }
 
-    public function getPurchasesModels(){
-
+    public function getPurchasesModels() : array
+    {
         return Purchase::toRelatedArray($this->purchases);
     }
 

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Validation\Rule;
-use App\Models\Product;
 
 class UserController extends Controller
 {
