@@ -6,8 +6,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\User;
-use Illuminate\Http\Request;
+
 
 class PagesController extends Controller
 {
@@ -20,7 +19,7 @@ class PagesController extends Controller
     public function category(Category $category){
         return view ('category', [
             'currentCategory' => $category,
-            'products' => Product::query()->where('category_id', $category->id)->filter()->paginate(9),//->filter(),
+            'products' => Product::query()->where('category_id', $category->id)->filter()->paginate(9),
             'categories' => Category::all()
         ]);
     }
@@ -36,7 +35,6 @@ class PagesController extends Controller
 
     public function index(){
         return view ('index', [
-//            'products' => Product::all(),
             'products' => Product::bestSold(10),
             'categories' => Category::query()->paginate(8)
         ]);

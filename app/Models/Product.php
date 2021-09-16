@@ -70,11 +70,11 @@ class Product extends Model
         }
     }
 
-    public static function bestSold(int $take = null)
+    public static function bestSold(int $take = null) : array
     {
 
         $sortBy = 'sold';
-        $orders = Order::all();//can be modified by created at to take orders from certain time, this method also needs cache
+        $orders = Order::all();
         $products = array();
 
 
@@ -111,7 +111,7 @@ class Product extends Model
 
 
     public function rating()
-    {//cache in the future
+    {
         $sum = 0;
         $reviews = $this->reviews;
         $number = count($reviews);

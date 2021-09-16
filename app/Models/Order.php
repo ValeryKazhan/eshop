@@ -11,12 +11,14 @@ class Order extends Model
 
     protected $guarded = [];
 
-    public function resetPurchasesIfNull(){
+    public function resetPurchasesIfNull() : void
+    {
         if($this->purchases == null)
             $this->resetPurchases();
     }
 
-    public function resetPurchases(){
+    public function resetPurchases() : void
+    {
         $this->update(['purchases' => array()]);
     }
 
@@ -40,7 +42,8 @@ class Order extends Model
         return Purchase::toRelatedArray($this->purchases);
     }
 
-    public function setPurchasesModels($purchases){
+    public function setPurchasesModels($purchases) : void
+    {
         $purchases = Purchase::toIdArray($purchases);
         $this->update(['purchases' => $purchases]);
     }
@@ -54,7 +57,8 @@ class Order extends Model
         return $this->customer->id == auth()->id();
     }
 
-    public function getTotalCost(){
+    public function getTotalCost() : int
+    {
         $totalCost=0;
         foreach ($this->getPurchasesModels() as $purchase){
             $totalCost+=$purchase->getCost();
@@ -62,7 +66,8 @@ class Order extends Model
         return $totalCost;
     }
 
-    public function getItemsNumber(){
+    public function getItemsNumber() : int
+    {
         $itemsNumber = 0;
         foreach ($this->getPurchasesModels() as $purchase){
             $itemsNumber+=$purchase->number;

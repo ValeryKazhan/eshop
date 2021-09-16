@@ -39,6 +39,7 @@
                         id="country"
                         name="country"
                         placeholder="Country"
+                        value="{{old('country')}}"
                         required
                     >
                     <x-error :id="'country'"/>
@@ -49,6 +50,7 @@
                         class="form-control"
                         id="region"
                         name="region"
+                        value="{{old('region')}}"
                         placeholder="Region (not necessary)"
                     >
                     <x-error :id="'region'"/>
@@ -60,6 +62,7 @@
                         id="locality"
                         name="locality"
                         placeholder="Locality"
+                        value="{{old('region')}}"
                         required
                     >
                     <x-error :id="'locality'"/>
@@ -71,6 +74,7 @@
                         id="street"
                         name="street"
                         placeholder="Street"
+                        value="{{old('street')}}"
                         required
                     >
                     <x-error :id="'street'"/>
@@ -82,6 +86,7 @@
                         id="house"
                         name="house"
                         placeholder="House/Apartment Number"
+                        value="{{old('house')}}"
                         required
                     >
                     <x-error :id="'house'"/>
@@ -90,9 +95,10 @@
                     <input
                         type="text"
                         class="form-control"
-                        id="postcode"
-                        name="postcode"
+                        id="index"
+                        name="index"
                         placeholder="Post Index"
+                        value="{{old('index')}}"
                         required
                     >
                     <x-error :id="'postcode'"/>
@@ -104,6 +110,7 @@
                             id="phone"
                             name="phone"
                             placeholder="Phone Number"
+                            value="{{old('phone')}}"
                             required
                         >
                     <x-error :id="'phone'"/>

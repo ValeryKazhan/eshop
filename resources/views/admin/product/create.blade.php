@@ -41,7 +41,7 @@
         @endif
 
 
-        <form method="POST" action="{{$action}}" class="row login_form mt-5 " style="margin-left: 440px">
+        <form method="POST" action="{{$action}}" class="row login_form mt-5">
 
             @csrf
             <x-admin-input-field name="Category">

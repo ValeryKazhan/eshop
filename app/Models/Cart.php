@@ -6,16 +6,17 @@ class Cart
 {
     const KEY = 'cartPurchases';
 
-    public static function setPurchases(array $purchases)
+    public static function setPurchases(array $purchases) : void
     {
         session()->put(self::KEY, $purchases);
     }
 
-    public static function clear(){
+    public static function clear() : void
+    {
         self::setPurchases(array());
     }
 
-    public static function getPurchases()
+    public static function getPurchases() : array
     {
         if (session()->get(self::KEY) == null)
             self::setPurchases([]);
@@ -23,11 +24,17 @@ class Cart
         return session()->get(self::KEY);
     }
 
-    public static function isEmpty(){
+    public static function getIdArray() : array
+    {
+        return Purchase::toIdArray(self::getPurchases());
+    }
+
+    public static function isEmpty() : bool
+    {
         return count(self::getPurchases())==0;
     }
 
-    public static function addProduct(Product $product, int $number)
+    public static function addProduct(Product $product, int $number) : void
     {
         $purchaseExists = false;
         $purchases = self::getPurchases();
@@ -44,13 +51,15 @@ class Cart
         self::setPurchases($purchases);
     }
 
-    public static function deletePurchase(int $purchaseId){
+    public static function deletePurchase(int $purchaseId) : void
+    {
         $purchases = self::getPurchases();
         unset ($purchases[$purchaseId]);
         self::setPurchases($purchases);
     }
 
-    public static function getItemsNumber(){
+    public static function getItemsNumber() : int
+    {
         $itemsNumber = 0;
         foreach (Cart::getPurchases() as $purchase){
             $itemsNumber+=$purchase->number;

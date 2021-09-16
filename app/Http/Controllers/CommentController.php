@@ -9,7 +9,7 @@ class CommentController extends Controller
     public function store(Product $product){
 
         request()->validate([
-            'body' => 'required'
+            'body' => ['required']
         ]);
         $product->comments()->create([
             'user_id' => auth()->id(),

@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\User;
 use App\Models\Utils;
+use Hamcrest\Util;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -21,7 +24,48 @@ class AdminController extends Controller
     }
 
     public function categories(){
-        return view('admin.categories');
+        return view('admin.categories', [
+            'categories' => Category::paginate(self::ITEMS_PER_PAGE)
+        ]);
+    }
+
+    public function createCategory(){
+        return view('admin.category.create', [
+            'categories' => Category::all()
+        ]);
+    }
+
+    public function storeCategory(Request $request){
+        Utils::backIfNoRequest();
+        $attributes = $request->validate([
+            'name' => ['required', 'max:255'],
+        ]);
+
+        $attributes['slug'] = Str::slug($attributes['name']);
+
+        Category::create($attributes);
+        return redirect('/admin/categories');
+    }
+
+    public function editCategory(Category $category){
+        return view('admin.category.create', [
+            'category' => $category
+        ]);
+    }
+
+    public function updateCategory(Category $category, Request $request){
+        Utils::backIfNoRequest();
+        $attributes = $request->validate([
+            'slug' => ['required', Rule::unique('categories', 'slug')->ignore($category->id)],
+            'name' => ['required', 'max:255']
+        ]);
+        $category->update($attributes);
+        return redirect('/admin/categories');
+    }
+
+    public function destroyCategory(Category $category){
+        $category->delete();
+        return redirect('/admin/categories');
     }
 
 
@@ -33,6 +77,7 @@ class AdminController extends Controller
         ]);
     }
 
+
     public function userOrders(User $user){
         return view ('admin.orders', [
             'user' => $user,
@@ -40,35 +85,38 @@ class AdminController extends Controller
         ]);
     }
 
-    public function createOrder(){
-        return view('admin.order.create');
-    }
-
-    public function storeOrder(){
-
-        return redirect('/admin/products');
-    }
-
-    public function editOrder(Order $order){
-        return view('admin.order.create', [
+    public function order (Order $order){
+        return view ('order', [
             'order' => $order
         ]);
     }
 
-    public function updateOrder($id, Request $request){
+    public function editOrder(Order $order){
+        return view('admin.order.create', [
+            'order' => $order,
+            'users' => User::all()
+        ]);
+    }
+
+    public function updateOrder(Order $order, Request $request){
 
         Utils::backIfNoRequest();
-
         $attributes = $request->validate([
-            'category_id' => ['required', Rule::exists('categories', 'id')],
-            'slug' => ['required', Rule::unique('products', 'slug')->ignore($id)],
-            'name' => ['required', 'max:255'],
-            'description' => ['required'],
-            'price' => ['required', 'digits_between:1,10', Rule::notIn(0)]
+            'user_id' => [Rule::exists('users', 'id')],
+            'is_delivered' => ['required', 'boolean']
         ]);
 
-        DB::table('products')->where('id', '=', $id)->update($attributes);
-        return redirect('/admin/products');
+        $attributes['contacts'] = $request->validate([
+            'country' => ['required', 'max:50', 'min:2'],
+            'region' => ['max:255'],
+            'locality' => ['required', 'max:50', 'min:2'],
+            'street' => ['required', 'max:50', 'min:2'],
+            'house' => ['required', 'digits_between:1,3'],
+            'index' => ['required', 'digits:6'],
+            'phone' => ['required','digits_between:5,15']
+        ]);
+        $order->update($attributes);
+        return redirect('/admin/orders');
     }
 
     public function destroyOrder($id){
@@ -118,23 +166,22 @@ class AdminController extends Controller
         ]);
     }
 
-    public function updateProduct($id, Request $request){
+    public function updateProduct(Product $product, Request $request){
 
         Utils::backIfNoRequest();
         $attributes = $request->validate([
             'category_id' => ['required', Rule::exists('categories', 'id')],
-            'slug' => ['required', Rule::unique('products', 'slug')->ignore($id)],
+            'slug' => ['required', Rule::unique('products', 'slug')->ignore($product->id)],
             'name' => ['required', 'max:255'],
             'description' => ['required'],
             'price' => ['required', 'digits_between:1,10', Rule::notIn(0)]
         ]);
-
-        DB::table('products')->where('id', '=', $id)->update($attributes);
+        $product->update($attributes);
         return redirect('/admin/products');
     }
 
-    public function destroyProduct($id){
-        DB::table('products')->where('id', '=', $id)->delete();
+    public function destroyProduct(Product $product){
+        $product->delete();
         return redirect('/admin/products');
     }
 
@@ -184,18 +231,101 @@ class AdminController extends Controller
 
 
     public function comments(){
-        return view ('admin.comments');
+        return view ('admin.comments', [
+            'comments' => Comment::paginate(self::ITEMS_PER_PAGE)
+        ]);
     }
 
+    public function productComments(Product $product){
+        return view ('admin.comments', [
+            'comments' => Comment::where('product_id', $product->id)->paginate(self::ITEMS_PER_PAGE),
+            'product' => $product
+        ]);
+    }
+
+    public function userComments(User $user){
+        return view ('admin.comments', [
+            'comments' => Comment::where('user_id', $user->id)->paginate(self::ITEMS_PER_PAGE),
+            'user' => $user
+        ]);
+    }
+
+    public function editComment(Comment $comment){
+        return view('admin.comment.edit', [
+            'comment' => $comment,
+            'products' => Product::all(),
+            'users' => User::all()
+        ]);
+    }
+
+    public function updateComment(Comment $comment, Request $request){
+        Utils::backIfNoRequest();
+        $attributes = $request->validate([
+            'user_id' => ['required', Rule::exists('users', 'id')],
+            'product_id' => ['required', Rule::exists('products', 'id')],
+            'body' => ['required']
+        ]);
+        $comment->update($attributes);
+        return redirect('/admin/comments');
+    }
+
+    public function destroyComment(Comment $comment){
+        $comment->delete();
+        return redirect('/admin/comments');
+    }
+
+
     public function reviews(){
-        return view('admin.reviews');
+        return view('admin.reviews', [
+            'reviews' => Review::paginate(self::ITEMS_PER_PAGE)
+        ]);
+    }
+
+    public function productReviews(Product $product){
+        return view ('admin.reviews', [
+            'reviews' => Review::where('product_id', $product->id)->paginate(self::ITEMS_PER_PAGE),
+            'product' => $product
+        ]);
+    }
+
+    public function userReviews(User $user){
+        return view ('admin.reviews', [
+            'reviews' => Review::where('user_id', $user->id)->paginate(self::ITEMS_PER_PAGE),
+            'user' => $user
+        ]);
+    }
+
+    public function editReview(Review $review){
+        return view('admin.review.edit', [
+            'review' => $review,
+            'products' => Product::all(),
+            'users' => User::all()
+        ]);
+    }
+
+    public function updateReview(Review $review, Request $request){
+
+        Utils::backIfNoRequest();
+        $attributes = $request->validate([
+            'user_id' => ['required', Rule::exists('users', 'id')],
+            'product_id' => ['required', Rule::exists('products', 'id')],
+            'rating' => [Rule::in([1,2,3,4,5])],
+            'body' => ['required']
+        ]);
+        $review->update($attributes);
+        return redirect('/admin/reviews');
+    }
+
+    public function destroyReview(Review $review){
+        $review->delete();
+        return redirect('/admin/reviews');
     }
 
 
 
     public function users(){
         return view('admin.users', [
-            'users' => User::query()->paginate(40)
+            'users' => User::query()->paginate(self::ITEMS_PER_PAGE)
         ]);
     }
 

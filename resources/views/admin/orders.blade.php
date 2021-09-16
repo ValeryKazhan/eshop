@@ -14,7 +14,7 @@
         ]"
         >
             <x-slot name="name">
-                Orders <x-link-button href="/admin/order/create">Create One</x-link-button>
+                Orders
             </x-slot>
             @foreach($orders as $order)
                 <x-admin-table-row>
@@ -50,7 +50,7 @@
                     <td>
                         <a href="/admin/order/{{$order->id}}/delete">DELETE</a>
                         <a href="/admin/order/{{$order->id}}/edit">EDIT</a>
-                        <a href="/admin/order/{{$order->id}}/edit">DETAILS</a>
+                        <a href="/admin/order/{{$order->id}}">DETAILS</a>
                     </td>
                 </x-admin-table-row>
             @endforeach

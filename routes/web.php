@@ -54,42 +54,58 @@ Route::get('/login', [SessionController::class, 'create'])->middleware('guest');
 Route::post('/login', [SessionController::class, 'store'])->middleware('guest');
 Route::get('/logout', [SessionController::class, 'destroy'])->middleware('auth');
 
+Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function (){
+    Route::get('', [AdminController::class, 'menu']);
+    Route::get('/users', [AdminController::class, 'users']);
+    Route::get('/user/create', [AdminController::class, 'createUser']);
+    Route::post('/user/store', [AdminController::class, 'storeUser']);
+    Route::get('/user/{user}/delete', [AdminController::class, 'destroyUser']);
+    Route::get('/user/{user}/edit', [AdminController::class, 'editUser']);
+    Route::post('/user/{user}/update', [AdminController::class, 'updateUser']);
 
-Route::get('/admin', [AdminController::class, 'menu'])->middleware('admin');
+    Route::get('/products', [AdminController::class, 'products']);
+    Route::get('/category/{category}/products', [AdminController::class, 'categoryProducts']);
+    Route::get('/product/create', [AdminController::class, 'createProduct']);
+    Route::post('/product/store', [AdminController::class, 'storeProduct']);
+    Route::get('/product/{product}/delete', [AdminController::class, 'destroyProduct']);
+    Route::get('/product/{product}/edit', [AdminController::class, 'editProduct']);
+    Route::post('/product/{product}/update', [AdminController::class, 'updateProduct']);
+    Route::get('/product/{product}/specification/edit', [AdminController::class, 'editProductSpecification']);
+    Route::post('/product/{product}/specification/update', [AdminController::class, 'updateProductSpecification']);
+    Route::get('/product/{product}/specification/add', [AdminController::class, 'addProductSpecification']);
+    Route::post('/product/{product}/specification/add', [AdminController::class, 'storeProductSpecification']);
+    Route::get('/product/{product}/specification/{key}/remove', [AdminController::class, 'removeProductSpecification']);
 
-Route::get('/admin/users', [AdminController::class, 'users'])->middleware('admin');
-Route::get('/admin/user/create', [AdminController::class, 'createUser'])->middleware('admin');
-Route::post('/admin/user/store', [AdminController::class, 'storeUser'])->middleware('admin');
-Route::get('/admin/user/{user}/delete', [AdminController::class, 'destroyUser'])->middleware('admin');
-Route::get('/admin/user/{user}/edit', [AdminController::class, 'editUser'])->middleware('admin');
-Route::post('/admin/user/{user}/update', [AdminController::class, 'updateUser'])->middleware('admin');
+    Route::get('/orders', [AdminController::class, 'orders']);
+    Route::get('/user/{user}/orders', [AdminController::class, 'userOrders']);
+    Route::get('/order/{order}', [AdminController::class, 'order']);
+    Route::get('/order/{order}/delete', [AdminController::class, 'destroyOrder']);
+    Route::get('/order/{order}/edit', [AdminController::class, 'editOrder']);
+    Route::post('/order/{order}/update', [AdminController::class, 'updateOrder']);
 
-Route::get('/admin/products', [AdminController::class, 'products'])->middleware('admin');
-Route::get('/admin/category/{category}/products', [AdminController::class, 'categoryProducts'])->middleware('admin');
-Route::get('/admin/product/create', [AdminController::class, 'createProduct'])->middleware('admin');
-Route::post('/admin/product/store', [AdminController::class, 'storeProduct'])->middleware('admin');
-Route::get('/admin/product/{product}/delete', [AdminController::class, 'destroyProduct'])->middleware('admin');
-Route::get('/admin/product/{product}/edit', [AdminController::class, 'editProduct'])->middleware('admin');
-Route::post('/admin/product/{product}/update', [AdminController::class, 'updateProduct'])->middleware('admin');
-Route::get('/admin/product/{product}/specification/edit', [AdminController::class, 'editProductSpecification'])->middleware('admin');
-Route::post('/admin/product/{product}/specification/update', [AdminController::class, 'updateProductSpecification'])->middleware('admin');
-Route::get('/admin/product/{product}/specification/add', [AdminController::class, 'addProductSpecification'])->middleware('admin');
-Route::post('/admin/product/{product}/specification/add', [AdminController::class, 'storeProductSpecification'])->middleware('admin');
-Route::get('/admin/product/{product}/specification/{key}/remove', [AdminController::class, 'removeProductSpecification'])->middleware('admin');
+    Route::get('/categories', [AdminController::class, 'categories']);
+    Route::get('/category/create', [AdminController::class, 'createCategory']);
+    Route::post('/category/store', [AdminController::class, 'storeCategory']);
+    Route::get('/category/{category}/delete', [AdminController::class, 'destroyCategory']);
+    Route::get('/category/{category}/edit', [AdminController::class, 'editCategory']);
+    Route::post('/category/{category}/update', [AdminController::class, 'updateCategory']);
 
-Route::get('/admin/orders', [AdminController::class, 'orders'])->middleware('admin');
-Route::get('/admin/user/{user}/orders', [AdminController::class, 'userOrders'])->middleware('admin');
-Route::get('/admin/order/create', [AdminController::class, 'createOrder'])->middleware('admin');
-Route::post('/admin/order/store', [AdminController::class, 'storeOrder'])->middleware('admin');
-Route::get('/admin/order/{order}/delete', [AdminController::class, 'destroyOrder'])->middleware('admin');
-Route::get('/admin/order/{order}/edit', [AdminController::class, 'editOrder'])->middleware('admin');
-Route::post('/admin/order/{order}/update', [AdminController::class, 'updateOrder'])->middleware('admin');
-
-Route::get('/admin/categories', [AdminController::class, 'categories'])->middleware('admin');
+    Route::get('/comments', [AdminController::class, 'comments']);
+    Route::get('/product/{product}/comments', [AdminController::class, 'productComments']);
+    Route::get('/user/{user}/comments', [AdminController::class, 'userComments']);
+    Route::get('/comment/{comment}/delete', [AdminController::class, 'destroyComment']);
+    Route::get('/comment/{comment}/edit', [AdminController::class, 'editComment']);
+    Route::post('/comment/{comment}/update', [AdminController::class, 'updateComment']);
 
 
-Route::get('/admin/comments', [AdminController::class, 'comments'])->middleware('admin');
-Route::get('/admin/reviews', [AdminController::class, 'reviews'])->middleware('admin');
+    Route::get('/reviews', [AdminController::class, 'reviews']);
+    Route::get('/product/{product}/reviews', [AdminController::class, 'productReviews']);
+    Route::get('/user/{user}/reviews', [AdminController::class, 'userReviews']);
+    Route::get('/review/{review}/delete', [AdminController::class, 'destroyReview']);
+    Route::get('/review/{review}/edit', [AdminController::class, 'editReview']);
+    Route::post('/review/{review}/update', [AdminController::class, 'updateReview']);
+});
+
 
 
 Route::get('/search-result', [PagesController::class, 'searchPage']);

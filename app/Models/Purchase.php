@@ -23,12 +23,12 @@ class Purchase
         }
     }
 
-    public function add($number)
+    public function add($number) : void
     {
         $this->number += $number;
     }
 
-    public function getCost()
+    public function getCost() : int
     {
         return $this->product->price * $this->number;
     }
@@ -45,7 +45,7 @@ class Purchase
         return $relatedArray;
     }
 
-    public static function toIdArray(array $relatedArray)
+    public static function toIdArray(array $relatedArray) : array
     {
         $idArray = array();
         foreach ($relatedArray as $purchase) {
@@ -54,12 +54,12 @@ class Purchase
         return $idArray;
     }
 
-    private static function numberIsCorrect($number)
+    private static function numberIsCorrect($number) : bool
     {
         return $number > 0;
     }
 
-    private static function priceIsCorrect($price)
+    private static function priceIsCorrect($price) : bool
     {
         return $price > 0;
     }

@@ -47,7 +47,8 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
-    public function getWishlistAttribute($wishlist){
+    public function getWishlistAttribute($wishlist)
+    {
         $wishlist = json_decode($wishlist, true);
         if($wishlist == null){
             $this->resetWishList();
@@ -56,11 +57,13 @@ class User extends Authenticatable
         return $wishlist;
     }
 
-    public function setWishlistAttribute(array $wishlist){
+    public function setWishlistAttribute(array $wishlist)
+    {
         $this->attributes['wishlist'] = json_encode($wishlist);
     }
 
-    public function getWishlistModels(){
+    public function getWishlistModels() : array
+    {
         $wishlist = $this->wishlist;
         foreach ($wishlist as $key=>$productId) {
             $wishlist[$key] = Product::find($productId);
@@ -68,14 +71,15 @@ class User extends Authenticatable
         return $wishlist;
     }
 
-    public function updateWishlistModels($wishlist){
+    public function updateWishlistModels(array $wishlist){
         foreach ($wishlist as $key=>$product){
             $wishlist[$key] = $product->id;
         }
         $this->update(['wishlist' => $wishlist]);
     }
 
-    public function addToWishlist(Product $product){
+    public function addToWishlist(Product $product) : void
+    {
         $this->resetWishlistIfNull();
         $isInWishlist = false;
         $wishlist = $this->wishlist;
@@ -92,7 +96,8 @@ class User extends Authenticatable
         }
     }
 
-    public function removeFromWishlist(Product $product){
+    public function removeFromWishlist(Product $product) : void
+    {
         $wishlist = $this->wishlist;
         if (($key = array_search($product->id, $wishlist))!==false) {
             unset($wishlist[$key]);
@@ -100,7 +105,8 @@ class User extends Authenticatable
         }
     }
 
-    public function resetWishList(){
+    public function resetWishList() : void
+    {
         $this->update(['wishlist' => array()]);
     }
 

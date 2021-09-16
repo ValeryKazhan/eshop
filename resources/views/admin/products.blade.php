@@ -9,6 +9,7 @@
         'Description',
         'Specification',
         'Price',
+        'Related',
         'Created At',
         'Updated At',
         'Actions'
@@ -39,6 +40,10 @@
                     </td>
                     <td>
                         ${{$product->price}}
+                    </td>
+                    <td>
+                        <a href="/admin/product/{{$product->id}}/comments">COMMENTS</a>
+                        <a href="/admin/product/{{$product->id}}/reviews">REVIEWS</a>
                     </td>
                     <td>
                         {{$product->creted_at}}

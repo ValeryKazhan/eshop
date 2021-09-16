@@ -34,15 +34,14 @@ class OrderController extends Controller
                 "locality" => ['required', 'max:50', 'min:2'],
                 "street" => ['required', 'max:50', 'min:2'],
                 "house" => ['required', 'digits_between:1,3'],
-                "postcode" => ['required', 'digits:6'],
+                "index" => ['required', 'digits:6'],
                 "phone" => ['required','digits_between:5,15']
         ]);
 
-
-
+        
         $order = Order::create([
             'user_id' => auth()->id(),
-            'purchases' => Cart::getPurchases(),
+            'purchases' => Cart::getIdArray(),
             'contacts' => $contacts
         ]);
 
