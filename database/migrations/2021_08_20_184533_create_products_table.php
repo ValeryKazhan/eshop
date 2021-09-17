@@ -21,7 +21,6 @@ class CreateProductsTable extends Migration
             $table->longText('description');
             $table->json('specification')->nullable();
             $table->bigInteger('price');
-            //$table->boolean('is_available');
             $table->timestamps();
         });
     }

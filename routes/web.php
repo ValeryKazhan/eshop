@@ -50,7 +50,7 @@ Route::get('/my-orders', [PagesController::class, 'myOrders'])->middleware('auth
 
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');
 Route::post('/register', [UserController::class, 'store'])->middleware('guest');
-Route::get('/login', [SessionController::class, 'create'])->middleware('guest');
+Route::get('/login', [SessionController::class, 'create'])->name('login')->middleware('guest');
 Route::post('/login', [SessionController::class, 'store'])->middleware('guest');
 Route::get('/logout', [SessionController::class, 'destroy'])->middleware('auth');
 
@@ -109,41 +109,3 @@ Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function (){
 
 
 Route::get('/search-result', [PagesController::class, 'searchPage']);
-
-
-
-
-Route::get('/blog', function (){
-    return view('blog');
-});
-
-
-
-
-
-
-Route::get('/checkout', function (){
-    return view('checkout');
-});
-
-Route::get('/confirmation', function (){
-    return view('!confirmation');
-});
-
-Route::get('/confirmation', function (){
-    return view('!confirmation');
-});
-
-
-
-
-
-Route::get('/single-blog', function (){
-    return view('single-blog');
-});
-
-
-
-Route::get('/order', function (){
-    return view('tracking-order');
-});

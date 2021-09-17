@@ -5,15 +5,15 @@
         <div class="row s_product_inner">
             <div class="col-lg-6">
                 <div class="owl-carousel owl-theme s_Product_carousel">
-                    <div class="single-prd-item">
-                        <img class="img-fluid" src="/img/category/s-p1.jpg" alt="">
-                    </div>
-                    <div class="single-prd-item">
-                        <img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-                    </div>
-                    <div class="single-prd-item">
-                        <img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-                    </div>
+                    @foreach($product->images as $imageRoot)
+                        <div
+                            class="single-product-image-container"
+                            style="background-image: url('{{$imageRoot}}');"
+                        ></div>
+{{--                    <div class="single-prd-item">--}}
+{{--                        <img class="img-fluid" src="{{$imageRoot}}" alt="">--}}
+{{--                    </div>--}}
+                   @endforeach
                 </div>
             </div>
             <div class="col-lg-5 offset-lg-1">

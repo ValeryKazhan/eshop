@@ -40,7 +40,8 @@ class ProductFactory extends Factory
                 'Freshness Duration' => '03days',
                 'When packeting' => 'Without touch of hand',
                 'Each Box contains' => '60pcs'
-            ]
+            ],
+            'images' => ['/img/products/Apple-iPhone-12/1.jpg']
         ];
     }
 }

@@ -8,7 +8,7 @@
                             <span class="fa fa-location-arrow"></span>
                             Address
                         </p>
-                        <p>Belarus, Gomel</p>
+{{--                        <p>Belarus, Gomel</p>--}}
                     </div>
 
                 </div>
@@ -20,7 +20,7 @@
                             Phone Number
                         </p>
                         <p>
-                            +375 44 724 90 34 <br>
+{{--                            +375 44 724 90 34 <br>--}}
                         </p>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                             Email
                         </p>
                         <p>
-                            valery.kazhan@gmail.com <br>
+                            @gmail.com <br>
                         </p>
                     </div>
                 </div>

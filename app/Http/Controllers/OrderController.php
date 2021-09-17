@@ -38,13 +38,12 @@ class OrderController extends Controller
                 "phone" => ['required','digits_between:5,15']
         ]);
 
-        
+
         $order = Order::create([
             'user_id' => auth()->id(),
             'purchases' => Cart::getIdArray(),
             'contacts' => $contacts
         ]);
-
 
         Cart::clear();
 

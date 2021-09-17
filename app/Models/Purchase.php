@@ -30,7 +30,7 @@ class Purchase
 
     public function getCost() : int
     {
-        return $this->product->price * $this->number;
+        return ($this->product->price * $this->number);
     }
 
     public static function toRelatedArray(array $idArray): array
@@ -64,5 +64,9 @@ class Purchase
         return $price > 0;
     }
 
+    public function getPrice() : int
+    {
+        return $this->price;
+    }
 
 }

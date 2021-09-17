@@ -15,6 +15,14 @@ class Category extends Model
         return ucwords($name);
     }
 
+    public function getImageAttribute($image){
+        return json_decode($image, true);
+    }
+
+    public function setImageAttribute($image){
+        $this->attributes['image'] = json_encode($image);
+    }
+
     public function scopeFilter($query){
         if(request('search')){
             $query

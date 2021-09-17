@@ -11,6 +11,14 @@ class Product extends Model
 
     protected $guarded = [];
 
+    public function getImagesAttribute($images){
+        return json_decode($images, true);
+    }
+
+    public function setImagesAttribute($images){
+        $this->attributes['images'] = json_encode($images);
+    }
+
     public function getNameAttribute($name)
     {
         return ucwords($name);
@@ -18,7 +26,6 @@ class Product extends Model
 
     public function getSpecificationAttribute($specification)
     {
-       //dd($specification);
         if (!$specification){
             $specification = $this->resetSpecification();
             return $specification;
@@ -69,6 +76,7 @@ class Product extends Model
             //->orWhere('description', 'like', $search);
         }
     }
+
 
     public static function bestSold(int $take = null) : array
     {
@@ -121,7 +129,10 @@ class Product extends Model
         }
 
         return $sum / $number;
+    }
 
+    public function getPrice() : string{
+        return $this->price;
     }
 
     public function category()
@@ -138,5 +149,7 @@ class Product extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+
 
 }

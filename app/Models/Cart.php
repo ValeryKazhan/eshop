@@ -67,4 +67,13 @@ class Cart
         return $itemsNumber;
     }
 
+    public static function getTotalCost() : string
+    {
+        $sum = 0;
+        foreach (self::getPurchases() as $purchase){
+            $sum+=$purchase->price;
+        }
+        return $sum;
+    }
+
 }

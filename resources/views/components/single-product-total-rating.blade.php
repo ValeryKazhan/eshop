@@ -7,7 +7,8 @@
     <div class="col-6">
         <div class="box_total">
             <h5>Overall</h5>
-            <h4>{{round($reviews->sum('rating')/($number = count($reviews)), 1)}}</h4>
+
+            <h4>{{($number = count($reviews)) === 0? 'NO RATING YET' : round($reviews->sum('rating')/$number, 1)}}</h4>
             <h6>({{$number}} Reviews)</h6>
         </div>
     </div>

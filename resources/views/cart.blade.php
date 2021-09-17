@@ -41,7 +41,7 @@
                                     <td>
                                         <a class="media" href="/product/{{$purchase->product->slug}}">
                                             <div class="d-flex">
-                                                <img src="img/cart/cart1.png" alt="">
+                                                <x-cart-image-container :image="$purchase->product->images[0]"/>
                                             </div>
                                             <div class="media-body">
                                                 <p style="width: 120px">{{$purchase->product->name}}</p>
@@ -52,7 +52,7 @@
                                         </x-link-humble>
                                     </td>
                                     <td>
-                                        <h5 style="width: 100px">${{$purchase->price}}</h5>
+                                        <h5 style="width: 100px">${{$purchase->getPrice()}}</h5>
                                     </td>
                                     <td>
                                         <x-quantity-input name="{{$purchase->product->id}}[number]" :id="$purchase->product->id" :value="$purchase->number"/>

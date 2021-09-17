@@ -57,7 +57,7 @@ class Order extends Model
         return $this->customer->id == auth()->id();
     }
 
-    public function getTotalCost() : int
+    public function getTotalCost() : string
     {
         $totalCost=0;
         foreach ($this->getPurchasesModels() as $purchase){
