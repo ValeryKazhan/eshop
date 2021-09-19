@@ -6,8 +6,6 @@
         </div>
 
         <x-carousel>
-
-
             @foreach($products as $product)
                 <x-product-carousel-slide
                     :product="$product"

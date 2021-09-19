@@ -23,11 +23,11 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->unique()->word;
+        $name = $this->faker->word;
         return [
 
             'category_id' => Category::factory(),
-            'slug' => Str::slug($name),
+            'slug' => $this->faker->unique()->slug,
             'name' => $name,
             'description' => $this->faker->paragraph(5),
             'price' => $this->faker->numberBetween(100, 1000),
@@ -40,8 +40,7 @@ class ProductFactory extends Factory
                 'Freshness Duration' => '03days',
                 'When packeting' => 'Without touch of hand',
                 'Each Box contains' => '60pcs'
-            ],
-            'images' => ['/img/products/Apple-iPhone-12/1.jpg']
+            ]
         ];
     }
 }

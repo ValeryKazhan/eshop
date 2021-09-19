@@ -6,7 +6,10 @@ namespace App\Models;
 
 class Utils
 {
-   public static function backIfNoRequest() : bool
+
+    const NO_IMAGE_PATH = '/img/no-image.png';
+
+   public static function backIfNoRequest()
    {
         if(!request())
             return back();

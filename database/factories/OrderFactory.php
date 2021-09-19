@@ -24,19 +24,18 @@ class OrderFactory extends Factory
      */
     public function definition()
     {
-        $product1 = Product::factory()->create(['description' => 'FROM ORDER FACTORY FIRST']);
-        $product2 = Product::factory()->create(['description' => 'FROM ORDER FACTORY SECOND']);
-        $product3 = Product::factory()->create(['description' => 'FROM ORDER FACTORY THIRD']);
+
         return [
             'user_id' => User::factory(),
-            'purchases' => Purchase::toIdArray(
-                    [
-                        new Purchase($product1, 4),
-                        new Purchase($product2, 5),
-                        new Purchase($product3, 6)
-                    ]
-                )
-            ,
+            'purchases' => array(),
+//            'purchases' => Purchase::toIdArray(
+//                    [
+//                        new Purchase(Product::factory()->create(['description' => 'FROM ORDER FACTORY FIRST']), 4),
+//                        new Purchase(Product::factory()->create(['description' => 'FROM ORDER FACTORY SECOND']), 5),
+//                        new Purchase(Product::factory()->create(['description' => 'FROM ORDER FACTORY THIRD']), 6)
+//                    ]
+//                )
+//            ,
             'contacts' => [
                 'country' => 'Vcountry',
                 'region' => 'Vregion',

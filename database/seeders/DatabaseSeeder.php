@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Order;
+use App\Models\Purchase;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -53,10 +54,69 @@ class DatabaseSeeder extends Seeder
 
         self::createCellPhones();
         self::createSpeakers();
+        self::createOtherCategories();
+
+        Order::factory(15)->create(
+            [
+                'purchases' => Purchase::toIdArray(
+                [
+                    new Purchase(Product::find(1), 4),
+                    new Purchase(Product::find(3), 86),
+                    new Purchase(Product::find(5), 24),
+                    new Purchase(Product::find(58), 15),
+                    new Purchase(Product::find(59), 19),
+                    new Purchase(Product::find(60), 15)
+                ])
+            ]
+        );
 
     }
 
-    private static function createSpeakers(){
+    private static function createOtherCategories(){
+
+        $cases = self::createCategory('Screen Protectors and Cases', '/img/categories/cases.jpg');
+        Product::factory(26)->create(['category_id' => $cases->id]);
+
+        $power = self::createCategory('Power Accessories', '/img/categories/power-accessories.jpg');
+        Product::factory(38)->create(['category_id' => $power->id]);
+
+        $laptops = self::createCategory('Laptops', '/img/categories/laptops.jpeg');
+        Product::factory(49)->create(['category_id' => $laptops->id]);
+
+        $keyboards = self::createCategory('Keyboards', '/img/categories/keyboards.jpeg');
+        Product::factory(67)->create(['category_id' => $keyboards->id]);
+
+        $mice = self::createCategory('Mice', '/img/categories/mice.jpeg');
+        Product::factory(56)->create(['category_id' => $mice->id]);
+
+        $connectors = self::createCategory('Connectors and Cables', '/img/categories/connectors.jpg');
+        Product::factory(112)->create(['category_id' => $connectors->id]);
+
+        $printers = self::createCategory('Printers', '/img/categories/printers.jpeg');
+        Product::factory(54)->create(['category_id' => $printers->id]);
+
+        $watches = self::createCategory('Smart Watches', '/img/categories/smart-watches.jpeg');
+        Product::factory(38)->create(['category_id' => $watches->id]);
+
+        $monitors = self::createCategory('Monitors', '/img/categories/monitors.jpeg');
+        Product::factory(45)->create(['category_id' => $monitors->id]);
+
+        $videogames = self::createCategory('Video Games', '');
+        Product::factory(18)->create(['category_id' => $videogames->id]);
+
+        $headphones = self::createCategory('Headphones', '');
+        Product::factory(27)->create(['category_id' => $headphones->id]);
+
+        $networking = self::createCategory('Networking Devices', '');
+        Product::factory(34)->create(['category_id' => $networking->id]);
+
+        $storage = self::createCategory('Removable Storage', '');
+        Product::factory(89)->create(['category_id' => $storage->id]);
+
+    }
+
+    private static function createSpeakers()
+    {
         $speakers = self::createCategory('Speakers', '/img/categories/speakers.jpg');
 
         $jblflip5 = self::createProduct(
@@ -125,10 +185,13 @@ class DatabaseSeeder extends Seeder
             beat-driven light show, portable lanyard, dedicated suction cup, 8W driver',
             []
         );
+
+        Product::factory(18)->create(['category_id' => $speakers->id]);
     }
 
-    private static function createCellPhones(){
-        $cellPhonesCategory = self::createCategory('Cell Phones', '/img/categories/cell-phones.jpg');
+    private static function createCellPhones()
+    {
+        $cellPhonesCategory = self::createCategory('Cell Phones', '/img/categories/cell-phones.jpeg');
 
         $applePhone12 = self::createProduct(
             $cellPhonesCategory,
@@ -356,15 +419,17 @@ class DatabaseSeeder extends Seeder
 
     }
 
-    private static function createCategory(string $categoryName, string $image){
+    private static function createCategory(string $categoryName, string $image)
+    {
         return Category::create([
             'name' => $categoryName,
-            'slug'=> Str::slug($categoryName),
+            'slug' => Str::slug($categoryName),
             'image' => $image
         ]);
     }
 
-    private static function createProduct(Category $category, string $productName, int $price, array $images, string $description = '', array $specification = []){
+    private static function createProduct(Category $category, string $productName, int $price, array $images, string $description = '', array $specification = [])
+    {
         return Product::create([
             'category_id' => $category->id,
             'slug' => Str::slug($productName),

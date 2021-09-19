@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Utils;
 
 class Category extends Model
 {
@@ -16,7 +17,9 @@ class Category extends Model
     }
 
     public function getImageAttribute($image){
-        return json_decode($image, true);
+        if($image&&$image!='')
+            return json_decode($image, true);
+        return Utils::NO_IMAGE_PATH;
     }
 
     public function setImageAttribute($image){

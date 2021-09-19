@@ -4,15 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Utils;
 
 class Product extends Model
 {
+
     use HasFactory;
 
     protected $guarded = [];
 
     public function getImagesAttribute($images){
-        return json_decode($images, true);
+
+        if($images)
+            return json_decode($images, true);
+
+
+            return [Utils::NO_IMAGE_PATH];
     }
 
     public function setImagesAttribute($images){
@@ -42,6 +49,7 @@ class Product extends Model
     {
         $this->update(['specification' => $specification]);
     }
+
 
     public function addSpecification(string $key, string $value): bool
     {

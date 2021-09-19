@@ -106,6 +106,4 @@ Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function (){
     Route::post('/review/{review}/update', [AdminController::class, 'updateReview']);
 });
 
-
-
 Route::get('/search-result', [PagesController::class, 'searchPage']);
