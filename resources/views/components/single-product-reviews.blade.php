@@ -3,10 +3,11 @@
 
 <div class="review_list">
     @foreach($reviews as $review)
+
         <div class="review_item">
             <div class="media">
                 <div class="d-flex">
-                    <img src="/img/product/review-1.png" alt="">
+                    <img src="/img/product/review-{{$loop->iteration}}.png" alt="">
                 </div>
                 <div class="media-body">
                     <h4>{{$review->author->name}}</h4>

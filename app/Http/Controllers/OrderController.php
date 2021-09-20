@@ -34,7 +34,7 @@ class OrderController extends Controller
                 "locality" => ['required', 'max:50', 'min:2'],
                 "street" => ['required', 'max:50', 'min:2'],
                 "house" => ['required', 'digits_between:1,3'],
-                "index" => ['required', 'digits:6'],
+                "index" => ['required', 'min:2', 'max:10'],
                 "phone" => ['required','digits_between:5,15']
         ]);
 

@@ -52,9 +52,49 @@ class DatabaseSeeder extends Seeder
                 'password' => 'password'
             ]);
 
+        $jack = User::create(
+            [
+                'name' => 'Jack Peterson',
+                'username' => 'jack',
+                'email' => 'jack@gmail.com',
+                'is_admin' => false,
+                'password' => 'password'
+            ]);
+
+        $user1 = User::create(
+            [
+                'name' => 'Jordan S',
+                'username' => 'kassy-cynthia',
+                'email' => 'kassy@gmail.com',
+                'is_admin' => false,
+                'password' => 'password'
+            ]);
+
+        $user2 = User::create(
+            [
+                'name' => 'Paul',
+                'username' => 'hardy-tiana',
+                'email' => 'hardy@gmail.com',
+                'is_admin' => false,
+                'password' => 'password'
+            ]);
+
+        $user3 = User::create(
+            [
+                'name' => 'Joe Miller',
+                'username' => 'bobby-laura',
+                'email' => 'laura@gmail.com',
+                'is_admin' => false,
+                'password' => 'password'
+            ]);
+
         self::createCellPhones();
         self::createSpeakers();
         self::createOtherCategories();
+
+        Review::factory()->create(['user_id' => $user1->id, 'rating' => 3, 'product_id' => 9, 'body' => 'A good phone but the price is a little too high though']);
+        Review::factory()->create(['user_id' => $user2->id, 'rating' => 5, 'product_id' => 9, 'body' => 'Really don\'t regret about purchasing it']);
+        Review::factory()->create(['user_id' => $user3->id, 'rating' => 4, 'product_id' => 9, 'body' => 'wow nice phone']);
 
         Order::factory(15)->create(
             [
