@@ -10,6 +10,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
+use Laravel\Cashier\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,5 +106,7 @@ Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function (){
     Route::get('/review/{review}/edit', [AdminController::class, 'editReview']);
     Route::post('/review/{review}/update', [AdminController::class, 'updateReview']);
 });
+
+    Route::post('\checkout', [PaymentController::class, '']);
 
 Route::get('/search-result', [PagesController::class, 'searchPage']);

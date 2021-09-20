@@ -4,7 +4,6 @@
     <div class="card-product__img">
         <x-image-container :image="$product->images[0]"/>
         <ul class="card-product__imgOverlay">
-
             <li>
                 <form method="POST" action="/cart/product/{{$product->slug}}/add">
                     @csrf
