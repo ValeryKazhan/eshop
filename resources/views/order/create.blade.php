@@ -1,26 +1,19 @@
 <x-layout title="Create Order">
+
     <x-start-banner :header="'Order Registration'" :pageName="'Order Registration'"/>
 
-    <!--================Order Details Area =================-->
     <section class="order_details section-margin--small">
         <div class="container">
 
             @if ($errors->any())
                 <ul class="text-xs text-center alert-danger">
                     @foreach ($errors->all() as $error)
-                        <li
-                            {{--                            style="color: #990000"--}}
-                        >{{$error}}</li>
+                        <li>{{$error}}</li>
                     @endforeach
                 </ul>
-                @endif
-
-
-
+            @endif
 
             <x-purchases-table :purchases="$purchases" :name="'Crate New Order'"/>
-
-
 
             <div class="text-right mt-3">
                 <x-link-button href="/cart">
@@ -104,20 +97,32 @@
                     <x-error :id="'postcode'"/>
                 </x-input-address>
                 <x-input-address :name="'Enter the Contact Phone (without \'+\' sign)'">
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="phone"
-                            name="phone"
-                            placeholder="Phone Number"
-                            value="{{old('phone')}}"
-                            required
-                        >
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="phone"
+                        name="phone"
+                        placeholder="Phone Number"
+                        value="{{old('phone')}}"
+                        required
+                    >
                     <x-error :id="'phone'"/>
                 </x-input-address>
                 <div class="col-4  form-group p_star">
 
                 </div>
+
+                <div class="form-group">
+                    <input id="cart" name="cart">
+                    <input id>
+{{--                    <label for="card-element">--}}
+{{--                        Credit or debit card--}}
+{{--                    </label>--}}
+{{--                    <div id="card-element">--}}
+
+{{--                    </div>--}}
+                </div>
+
                 <div class="col-4 mt-2">
                     <x-submit-button>
                         I Confirm
@@ -130,7 +135,37 @@
 
 
     </section>
-    <!--================End Order Details Area =================-->
+    <script src="https://js.stripe.com/v3/" defer></script>
+    <link rel="stylesheet" href="/css/stripe.scss">
+
+
 </x-layout>
+
+<script>
+
+    (function (){
+        let stripe = Stripe({{env('stripe_key')}});
+        let elements = stripe.elements();
+
+        let style = {
+            base: {
+                color: '#303238',
+                fontSize: '16px',
+                fontFamily: '"Open Sans", sans-serif',
+                fontSmoothing: 'antialiased',
+                '::placeholder': {
+                    color: '#CFD7DF',
+                },
+            },
+            invalid: {
+                color: '#e5424d',
+                ':focus': {
+                    color: '#303238',
+                },
+            },
+        };
+
+    })();
+</script>
 
 

@@ -10,6 +10,10 @@ use App\Models\Product;
 
 class PagesController extends Controller
 {
+    public function pay(){
+        return view('order.stripe');
+    }
+
     public function product(Product $product){
         return view('single-product', [
             'product' => $product
@@ -32,8 +36,11 @@ class PagesController extends Controller
             'categories' => Category::query()->filter()->get()
         ]);
     }
-
+    //сделать отдельную таблицу для связи заказов и платежной системы.
     public function index(){
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        $s = $stripe->checkout->sessions->retrieve('cs_test_a1HeAp46I8DBGMYWTukD2AEPsvDZmYQtwvUs6tDPm0y0ZDbIj95ZFH7oJo');
+        dd($s);
         return view ('index', [
             'products' => Product::bestSold(10),
             'categories' => Category::query()->paginate(8)

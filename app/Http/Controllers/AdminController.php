@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Stripe\StripeClient;
 
 class AdminController extends Controller
 {
@@ -153,9 +154,16 @@ class AdminController extends Controller
             'price' => ['required', 'digits_between:1,10', Rule::notIn(0)]
         ]);
 
+        $product = Product::create($attributes);
+
+        $stripe->products->create([
+            'id' => $product->id,
+            'name' => $product->name,
+            'description' => $product->description
+        ]);
+
         $attributes['slug'] = Str::slug($attributes['name']);
 
-        Product::create($attributes);
         return redirect('/admin/products');
     }
 

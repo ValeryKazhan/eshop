@@ -6,6 +6,7 @@ use App\Http\Middleware\Admin;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Pagination\Paginator;
+use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        Cashier::calculateTaxes();
+
         Paginator::useBootstrap();
 
         Blade::if('admin', function(){
