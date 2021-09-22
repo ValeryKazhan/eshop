@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
@@ -11,6 +12,10 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
 use Laravel\Cashier\Http\Controllers\PaymentController;
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +26,10 @@ use Laravel\Cashier\Http\Controllers\PaymentController;
 | contains the "web" middleware group. Now create.blade.php something great!
 |
 */
+
+Route::get('dump', function (){
+    dd(redirect()->route('succeeded')->getTargetUrl());
+});
 
 Route::get('/', [PagesController::class, 'index']);
 Route::get('/category/{category:slug}', [PagesController::class, 'category']);
@@ -111,3 +120,12 @@ Route::get('/search-result', [PagesController::class, 'searchPage']);
 
 Route::get('/stripe/{id}', [PaymentController::class, 'show'] );
 Route::get('/pay', [PagesController::class, 'pay']);
+
+Route::group(['prefix' => '/stripe', 'middleware' => 'auth'], function(){
+    Route::get('/succeeded', function (){
+        return view('stripe.succeeded');
+    })->name('succeeded');
+    Route::get('/not-succeeded', function (){
+        return view('stripe.not-succeeded');
+    })->name('not-succeeded');
+});

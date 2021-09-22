@@ -112,16 +112,7 @@
 
                 </div>
 
-                <div class="form-group">
-                    <input id="cart" name="cart">
-                    <input id>
-{{--                    <label for="card-element">--}}
-{{--                        Credit or debit card--}}
-{{--                    </label>--}}
-{{--                    <div id="card-element">--}}
 
-{{--                    </div>--}}
-                </div>
 
                 <div class="col-4 mt-2">
                     <x-submit-button>
@@ -140,32 +131,5 @@
 
 
 </x-layout>
-
-<script>
-
-    (function (){
-        let stripe = Stripe({{env('stripe_key')}});
-        let elements = stripe.elements();
-
-        let style = {
-            base: {
-                color: '#303238',
-                fontSize: '16px',
-                fontFamily: '"Open Sans", sans-serif',
-                fontSmoothing: 'antialiased',
-                '::placeholder': {
-                    color: '#CFD7DF',
-                },
-            },
-            invalid: {
-                color: '#e5424d',
-                ':focus': {
-                    color: '#303238',
-                },
-            },
-        };
-
-    })();
-</script>
 
 

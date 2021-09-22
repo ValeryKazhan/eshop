@@ -69,4 +69,15 @@ class Purchase
         return $this->price;
     }
 
+    public function toStripeFormat() : array {
+        return [
+            'price_data' => [
+                'currency' => 'USD',
+                'product' => ProductApi::findByProduct($this->product)->stripe_id,
+                'unit_amount' => ($this->getPrice() * 100)
+            ],
+            'quantity' => $this->number,
+        ];
+    }
+
 }

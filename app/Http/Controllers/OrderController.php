@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\OrderApi;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
 use Stripe\PaymentIntent;
@@ -42,38 +43,21 @@ class OrderController extends Controller
                 "phone" => ['required','digits_between:5,15']
         ]);
 
+
+
         \Stripe\Stripe::setApiKey(env('stripe_secret'));
-        //ОТПРАВЛЯТЬ ДАННЫЕ ПО ЗАКАЗАМ ДЛЯ ПЛАТЁЖНОЙ СИСТЕМЫ.
+
+
+
         $stripeSession = Session::create([
-            'line_items' => $productsArray/*[
-                [
-                    'price_data' => [
-                        'currency' => 'USD',
-                        'product' => 'prod_KGgBrazT9ne9qi',
-                        'unit_amount' => 100
-                    ],
-                    'quantity' => 1,
-                ],
-                [
-                    'price_data' => [
-                        'currency' => 'USD',
-                        'product' => 'prod_KGgBaBggDMXMUz',
-                        'unit_amount' => 200
-                    ],
-                    'quantity' => 1,
-                ]
-            ]*/,
+            'line_items' => Cart::toStripeLineItems(),
             'payment_method_types' => [
                 'card',
             ],
             'mode' => 'payment',
-            'success_url' => 'http://eshop.test/product/samsung-galaxy-z-flip3-5g-dual-sim-128gb-8gb-ram-sm-f711b-black',
-            'cancel_url' => 'http://eshop.test/product/xiaomi-mi-bluetooth-speaker-mini-grey',
+            'success_url' => 'http://eshop.test/',//redirect()->route('succeeded')->getTargetUrl(),
+            'cancel_url' => 'http://eshop.test/',
         ]);
-
-        return redirect()->to($stripeSession->url);
-        dd($stripeSession);
-//        PaymentMethod::
 
         $order = Order::create([
             'user_id' => auth()->id(),
@@ -81,9 +65,15 @@ class OrderController extends Controller
             'contacts' => $contacts
         ]);
 
+        OrderApi::create([
+            'order_id' => $order->id,
+            'stripe_id' =>  $stripeSession->id
+        ]);
+
         Cart::clear();
 
-        return redirect('/order/'.$order->id);
+        return redirect()->to($stripeSession->url);
+
     }
 
 }

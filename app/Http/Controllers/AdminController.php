@@ -18,6 +18,7 @@ use Stripe\StripeClient;
 
 class AdminController extends Controller
 {
+
     const ITEMS_PER_PAGE = 40;
 
     public function menu(){
@@ -100,7 +101,6 @@ class AdminController extends Controller
     }
 
     public function updateOrder(Order $order, Request $request){
-
         Utils::backIfNoRequest();
         $attributes = $request->validate([
             'user_id' => [Rule::exists('users', 'id')],
@@ -153,30 +153,31 @@ class AdminController extends Controller
             'description' => ['required'],
             'price' => ['required', 'digits_between:1,10', Rule::notIn(0)]
         ]);
-
+        $attributes['slug'] = Str::slug($attributes['name']);
         $product = Product::create($attributes);
 
-        $stripe->products->create([
-            'id' => $product->id,
-            'name' => $product->name,
-            'description' => $product->description
-        ]);
-
-        $attributes['slug'] = Str::slug($attributes['name']);
+        Utils::createStripeProduct($product);
 
         return redirect('/admin/products');
     }
 
     public function editProduct(Product $product){
+
+
+
         return view('admin.product.create', [
             'product' => $product,
             'categories' => Category::all()
         ]);
     }
 
+    /**
+     * @throws \Stripe\Exception\ApiErrorException
+     */
     public function updateProduct(Product $product, Request $request){
 
         Utils::backIfNoRequest();
+
         $attributes = $request->validate([
             'category_id' => ['required', Rule::exists('categories', 'id')],
             'slug' => ['required', Rule::unique('products', 'slug')->ignore($product->id)],
@@ -184,11 +185,22 @@ class AdminController extends Controller
             'description' => ['required'],
             'price' => ['required', 'digits_between:1,10', Rule::notIn(0)]
         ]);
+
+        Utils::updateStripeProduct($product, [
+            'name' => $attributes['name'],
+            'description' => $attributes['description']
+        ]);
+
+
         $product->update($attributes);
         return redirect('/admin/products');
     }
 
     public function destroyProduct(Product $product){
+
+        $stripeClient = Utils::getStripeClient();
+        $stripeClient->products->delete($product->id);
+
         $product->delete();
         return redirect('/admin/products');
     }

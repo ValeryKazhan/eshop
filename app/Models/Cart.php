@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Cartalyst\Stripe\Stripe;
+use phpDocumentor\Reflection\Types\Self_;
+
 class Cart
 {
     const KEY = 'cartPurchases';
@@ -74,6 +77,14 @@ class Cart
             $sum+=$purchase->price;
         }
         return $sum;
+    }
+
+    public static function toStripeLineItems() : array {
+        $stripePurchases = array();
+        foreach (self::getPurchases() as $purchase){
+            array_push($stripePurchases, $purchase->toStripeFormat());
+        }
+        return $stripePurchases;
     }
 
 }

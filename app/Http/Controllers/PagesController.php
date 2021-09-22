@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Utils;
 
 
 class PagesController extends Controller
@@ -38,9 +39,10 @@ class PagesController extends Controller
     }
     //сделать отдельную таблицу для связи заказов и платежной системы.
     public function index(){
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
-        $s = $stripe->checkout->sessions->retrieve('cs_test_a1HeAp46I8DBGMYWTukD2AEPsvDZmYQtwvUs6tDPm0y0ZDbIj95ZFH7oJo');
-        dd($s);
+//        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+//        $s = $stripe->checkout->sessions->retrieve('cs_test_a1HeAp46I8DBGMYWTukD2AEPsvDZmYQtwvUs6tDPm0y0ZDbIj95ZFH7oJo');
+        $stripe = Utils::getStripeClient();
+
         return view ('index', [
             'products' => Product::bestSold(10),
             'categories' => Category::query()->paginate(8)

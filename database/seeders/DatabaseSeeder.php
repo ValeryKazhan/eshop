@@ -9,9 +9,11 @@ use App\Models\Order;
 use App\Models\Purchase;
 use App\Models\Review;
 use App\Models\User;
+use App\Models\Utils;
 use Illuminate\Database\Seeder;
 use App\Models\Product;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +25,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('users')->truncate();
+        DB::table('products')->truncate();
+        DB::table('categories')->truncate();
+        DB::table('orders')->truncate();
+        DB::table('comments')->truncate();
+        DB::table('reviews')->truncate();
+        DB::table('product_apis')->truncate();
+
 
 //        Order::factory(4)->create();
 //        Product::factory(8)->create(['category_id' => 1]);
@@ -96,62 +106,62 @@ class DatabaseSeeder extends Seeder
         Review::factory()->create(['user_id' => $user2->id, 'rating' => 5, 'product_id' => 9, 'body' => 'Really don\'t regret about purchasing it']);
         Review::factory()->create(['user_id' => $user3->id, 'rating' => 4, 'product_id' => 9, 'body' => 'wow nice phone']);
 
-        Order::factory(15)->create(
-            [
-                'purchases' => Purchase::toIdArray(
-                [
-                    new Purchase(Product::find(1), 4),
-                    new Purchase(Product::find(3), 86),
-                    new Purchase(Product::find(5), 24),
-                    new Purchase(Product::find(58), 15),
-                    new Purchase(Product::find(59), 19),
-                    new Purchase(Product::find(60), 15)
-                ])
-            ]
-        );
+//        Order::factory(15)->create(
+//            [
+//                'purchases' => Purchase::toIdArray(
+//                [
+//                    new Purchase(Product::find(1), 4),
+//                    new Purchase(Product::find(3), 86),
+//                    new Purchase(Product::find(5), 24),
+//                    new Purchase(Product::find(8), 15),
+//                    new Purchase(Product::find(9), 19),
+//                    new Purchase(Product::find(10), 15)
+//                ])
+//            ]
+//        );
 
     }
 
     private static function createOtherCategories(){
 
         $cases = self::createCategory('Screen Protectors and Cases', '/img/categories/cases.jpg');
-        Product::factory(26)->create(['category_id' => $cases->id]);
+        Product::factory(6)->create(['category_id' => $cases->id]);
 
         $power = self::createCategory('Power Accessories', '/img/categories/power-accessories.jpg');
-        Product::factory(38)->create(['category_id' => $power->id]);
+        Product::factory(8)->create(['category_id' => $power->id]);
 
         $laptops = self::createCategory('Laptops', '/img/categories/laptops.jpeg');
-        Product::factory(49)->create(['category_id' => $laptops->id]);
+        Product::factory(3)->create(['category_id' => $laptops->id]);
 
         $keyboards = self::createCategory('Keyboards', '/img/categories/keyboards.jpeg');
-        Product::factory(67)->create(['category_id' => $keyboards->id]);
+        Product::factory(8)->create(['category_id' => $keyboards->id]);
 
         $mice = self::createCategory('Mice', '/img/categories/mice.jpeg');
-        Product::factory(56)->create(['category_id' => $mice->id]);
+        Product::factory(6)->create(['category_id' => $mice->id]);
 
         $connectors = self::createCategory('Connectors and Cables', '/img/categories/connectors.jpg');
-        Product::factory(112)->create(['category_id' => $connectors->id]);
+        Product::factory(9)->create(['category_id' => $connectors->id]);
 
         $printers = self::createCategory('Printers', '/img/categories/printers.jpeg');
-        Product::factory(54)->create(['category_id' => $printers->id]);
+        Product::factory(8)->create(['category_id' => $printers->id]);
 
         $watches = self::createCategory('Smart Watches', '/img/categories/smart-watches.jpeg');
-        Product::factory(38)->create(['category_id' => $watches->id]);
+        Product::factory(6)->create(['category_id' => $watches->id]);
 
         $monitors = self::createCategory('Monitors', '/img/categories/monitors.jpeg');
-        Product::factory(45)->create(['category_id' => $monitors->id]);
+        Product::factory(13)->create(['category_id' => $monitors->id]);
 
         $videogames = self::createCategory('Video Games', '');
-        Product::factory(18)->create(['category_id' => $videogames->id]);
+        Product::factory(5)->create(['category_id' => $videogames->id]);
 
         $headphones = self::createCategory('Headphones', '');
-        Product::factory(27)->create(['category_id' => $headphones->id]);
+        Product::factory(8)->create(['category_id' => $headphones->id]);
 
         $networking = self::createCategory('Networking Devices', '');
-        Product::factory(34)->create(['category_id' => $networking->id]);
+        Product::factory(4)->create(['category_id' => $networking->id]);
 
         $storage = self::createCategory('Removable Storage', '');
-        Product::factory(89)->create(['category_id' => $storage->id]);
+        Product::factory(3)->create(['category_id' => $storage->id]);
 
     }
 
@@ -226,7 +236,7 @@ class DatabaseSeeder extends Seeder
             []
         );
 
-        Product::factory(18)->create(['category_id' => $speakers->id]);
+        Product::factory(8)->create(['category_id' => $speakers->id]);
     }
 
     private static function createCellPhones()
@@ -455,7 +465,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        Product::factory(46)->create(['category_id' => $cellPhonesCategory->id]);
+        Product::factory(5)->create(['category_id' => $cellPhonesCategory->id]);
 
     }
 

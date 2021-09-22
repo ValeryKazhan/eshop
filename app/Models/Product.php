@@ -13,6 +13,13 @@ class Product extends Model
 
     protected $guarded = [];
 
+    public function setDescriptionAttribute($description){
+        if(($description === '')||($description == null)){
+            $description = 'no description';
+        }
+        $this->attributes['description'] = 'no description';
+    }
+
     public function getImagesAttribute($images){
 
         if($images)
