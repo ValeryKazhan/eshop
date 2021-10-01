@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Middleware\Admin;
+use App\Services\PaymentHelpers\StripeHelper;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Pagination\Paginator;
@@ -29,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
     {
 
         Cashier::calculateTaxes();
-
+        StripeHelper::setSecretKey();
         Paginator::useBootstrap();
 
         Blade::if('admin', function(){

@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->boolean('is_delivered')->default(false);
             $table->json('purchases');
             $table->json('contacts');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Filters\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Utils;
+use App\Services\Utils;
 
 class Product extends Model
 {
@@ -14,10 +16,10 @@ class Product extends Model
     protected $guarded = [];
 
     public function setDescriptionAttribute($description){
-        if(($description === '')||($description == null)){
+        if(($description == '')||($description == null)){
             $description = 'no description';
         }
-        $this->attributes['description'] = 'no description';
+        $this->attributes['description'] = $description;
     }
 
     public function getImagesAttribute($images){
@@ -83,13 +85,19 @@ class Product extends Model
         return array();
     }
 
-    public function scopeFilter($query)
+//    public function scopeFilter($query)
+//    {
+//
+//        if (request('search')) {
+//            $query
+//                ->where('name', 'like', $search = ('%' . request('search') . '%'));
+//            //->orWhere('description', 'like', $search);
+//        }
+//    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filter): Builder
     {
-        if (request('search')) {
-            $query
-                ->where('name', 'like', $search = ('%' . request('search') . '%'));
-            //->orWhere('description', 'like', $search);
-        }
+        return $filter->apply($builder);
     }
 
 

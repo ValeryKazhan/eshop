@@ -46,5 +46,6 @@
 <script src="/vendors/jquery.ajaxchimp.min.js" defer></script>
 <script src="/vendors/mail-script.js" defer></script>
 <script src="/js/main.js" defer></script>
+
 </body>
 </html>

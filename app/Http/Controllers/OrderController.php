@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderApi;
+use App\Services\PaymentHelpers\StripeHelper;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
 use Stripe\PaymentIntent;
@@ -43,26 +44,27 @@ class OrderController extends Controller
                 "phone" => ['required','digits_between:5,15']
         ]);
 
-
-
-        \Stripe\Stripe::setApiKey(env('stripe_secret'));
-
-
-
-        $stripeSession = Session::create([
-            'line_items' => Cart::toStripeLineItems(),
-            'payment_method_types' => [
-                'card',
-            ],
-            'mode' => 'payment',
-            'success_url' => 'http://eshop.test/',//redirect()->route('succeeded')->getTargetUrl(),
-            'cancel_url' => 'http://eshop.test/',
-        ]);
+        //\Stripe\Stripe::setApiKey(env('stripe_secret'));
 
         $order = Order::create([
             'user_id' => auth()->id(),
             'purchases' => Cart::getIdArray(),
             'contacts' => $contacts
+        ]);
+        Cart::clear();
+        return redirect('/order/'.$order->id);
+    }
+
+    public function pay(Order $order) {
+
+        $stripeSession = Session::create([
+            'line_items' => StripeHelper::purchasesToLineItems($order->getPurchasesModels()),
+            'payment_method_types' => [
+                'card',
+            ],
+            'mode' => 'payment',
+            'success_url' => url('/order/'.$order->id),
+            'cancel_url' => url('/order/'.$order->id),
         ]);
 
         OrderApi::create([
@@ -70,8 +72,7 @@ class OrderController extends Controller
             'stripe_id' =>  $stripeSession->id
         ]);
 
-        Cart::clear();
-
+        dd($stripeSession);
         return redirect()->to($stripeSession->url);
 
     }

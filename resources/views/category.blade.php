@@ -16,7 +16,8 @@
             <x-sidebar-categories :categories="$categories"/>
 
         </x-slot>
-        {{$products->links()}}
+
+        {{$products->withQueryString()->links()}}
     </x-category-section>
 
    <x-subscribe-panel/>

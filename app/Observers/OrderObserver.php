@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Order;
 use App\Models\OrderApi;
 use App\Models\Utils;
+use App\Services\PaymentHelpers\StripeHelper;
 
 class OrderObserver
 {
@@ -27,8 +28,14 @@ class OrderObserver
      */
     public function updated(Order $order)
     {
-        $stripe = Utils::getStripeClient();
+        $stripe = StripeHelper::getClient();
         $session = $stripe->checkout->sessions->retrieve(OrderApi::getStripeId($order));
+        $session->updateAttributes([
+            ''
+        ]);
+
+
+//        $stripe->checkout
 //        $session->updateAttributes([
 //            ''
 //        ]);

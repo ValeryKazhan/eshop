@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\ProductFilter;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Utils;
+use App\Services\StripeHelper;
+use Illuminate\Http\Request;
 
 
 class PagesController extends Controller
 {
-    public function pay(){
-        return view('order.stripe');
-    }
 
     public function product(Product $product){
         return view('single-product', [
@@ -21,10 +20,17 @@ class PagesController extends Controller
         ]);
     }
 
-    public function category(Category $category){
+    public function category(Category $category, ProductFilter $filter, Request $request){
+
+        if($request->get('perPage')){
+            $perPage = $request->get('perPage');
+        } else {
+            $perPage = 9;
+        }
+
         return view ('category', [
             'currentCategory' => $category,
-            'products' => Product::query()->where('category_id', $category->id)->filter()->paginate(9),
+            'products' => Product::query()->where('category_id', $category->id)->filter($filter)->paginate($perPage),
             'categories' => Category::all()
         ]);
     }
@@ -37,11 +43,9 @@ class PagesController extends Controller
             'categories' => Category::query()->filter()->get()
         ]);
     }
-    //сделать отдельную таблицу для связи заказов и платежной системы.
+
+
     public function index(){
-//        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
-//        $s = $stripe->checkout->sessions->retrieve('cs_test_a1HeAp46I8DBGMYWTukD2AEPsvDZmYQtwvUs6tDPm0y0ZDbIj95ZFH7oJo');
-        $stripe = Utils::getStripeClient();
 
         return view ('index', [
             'products' => Product::bestSold(10),

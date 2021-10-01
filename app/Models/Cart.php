@@ -34,7 +34,7 @@ class Cart
 
     public static function isEmpty() : bool
     {
-        return count(self::getPurchases())==0;
+        return count(self::getPurchases())===0;
     }
 
     public static function addProduct(Product $product, int $number) : void
@@ -77,14 +77,6 @@ class Cart
             $sum+=$purchase->price;
         }
         return $sum;
-    }
-
-    public static function toStripeLineItems() : array {
-        $stripePurchases = array();
-        foreach (self::getPurchases() as $purchase){
-            array_push($stripePurchases, $purchase->toStripeFormat());
-        }
-        return $stripePurchases;
     }
 
 }

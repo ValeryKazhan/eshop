@@ -49,6 +49,7 @@ Route::group(['prefix' => '/cart'], function () {
 Route::get('/order/create.blade.php', [OrderController::class, 'create'])->middleware('auth');
 Route::post('/order/store', [OrderController::class, 'store'])->middleware('auth');
 Route::get('/order/{order}', [PagesController::class, 'order'])->middleware('auth');
+Route::get('/order/{order}/checkout', [OrderController::class, 'pay'])->middleware('auth');
 
 Route::get('/wishlist', [PagesController::class, 'wishlist'])->middleware('auth');
 Route::post('/wishlist/product/{product:slug}/add', [UserController::class, 'addToWishlist'])->middleware('auth');
@@ -106,7 +107,6 @@ Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function (){
     Route::get('/comment/{comment}/edit', [AdminController::class, 'editComment']);
     Route::post('/comment/{comment}/update', [AdminController::class, 'updateComment']);
 
-
     Route::get('/reviews', [AdminController::class, 'reviews']);
     Route::get('/product/{product}/reviews', [AdminController::class, 'productReviews']);
     Route::get('/user/{user}/reviews', [AdminController::class, 'userReviews']);
@@ -129,3 +129,19 @@ Route::group(['prefix' => '/stripe', 'middleware' => 'auth'], function(){
         return view('stripe.not-succeeded');
     })->name('not-succeeded');
 });
+
+Route::post('/newsletter', function (){
+    $client = new \MailchimpMarketing\ApiClient();
+    $client->setConfig([
+        'apiKey' => env('MAILCHIMP_KEY'),
+        'server' => 'us5'
+    ]);
+    $response = $client->lists->addListMember('ed095266c1', [
+        'email_address' => request('email'),
+        'status' => 'subscribed'
+    ]);
+
+    return redirect('/');
+});
+
+

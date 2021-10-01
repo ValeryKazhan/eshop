@@ -8,6 +8,8 @@ use function PHPUnit\Framework\throwException;
 
 class Purchase
 {
+    const CENTS_PER_DOLLAR = 100;
+
     public Product $product;
     public int $number;
     public int $price;
@@ -69,15 +71,9 @@ class Purchase
         return $this->price;
     }
 
-    public function toStripeFormat() : array {
-        return [
-            'price_data' => [
-                'currency' => 'USD',
-                'product' => ProductApi::findByProduct($this->product)->stripe_id,
-                'unit_amount' => ($this->getPrice() * 100)
-            ],
-            'quantity' => $this->number,
-        ];
+    public function getPriceInCents() : int {
+        return $this->price * self::CENTS_PER_DOLLAR;
     }
+
 
 }

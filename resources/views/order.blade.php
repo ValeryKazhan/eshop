@@ -10,11 +10,14 @@
             <x-purchases-table :purchases="$order->getPurchasesModels()" :name="'Order id: '.$order->id"/>
 
             <div class="text-center mt-5">
-            <x-link-button href="/">Continue Shopping</x-link-button>
-            <x-link-button href="/my-orders">My Orders</x-link-button>
+                <x-link-button href="/">Continue Shopping</x-link-button>
+                <x-link-button href="/my-orders">My Orders</x-link-button>
             </div>
         </div>
 
+        @if(!$order->is_payed)
+            <x-link-button href="/order/{{$order->id}}/checkout">Proceed to payment</x-link-button>
+        @endif
     </section>
 </x-layout>
 

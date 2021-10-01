@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
+
+use App\Services\StripeHelper;
 use App\Models\Product;
-use App\Models\ProductApi;
-use App\Models\Utils;
 
 class ProductObserver
 {
@@ -16,18 +16,7 @@ class ProductObserver
      */
     public function created(Product $product)
     {
-
-        $stripeClient = Utils::getStripeClient();
-        $stripeClient->products->create([
-            'id' => $product->id,
-            'name' => $product->name,
-            'description' => $product->description
-        ]);
-
-        ProductApi::create([
-           'product_id' => $product->id,
-           'stripe_id' => $product->id
-        ]);
+        StripeHelper::createProduct($product);
     }
 
     /**
@@ -38,18 +27,7 @@ class ProductObserver
      */
     public function updated(Product $product)
     {
-        $stripeClient = Utils::getStripeClient();
-        $stripeClient->products->update([
-            'id' => $product->id,
-            'name' => $product->name,
-            'description' => $product->description
-        ]);
-
-        ProductApi::findByProduct($product)->update([
-            'product_id' => $product->id,
-            'stripe_id' => $product->id
-        ]);
-
+        StripeHelper::updateProduct($product);
     }
 
     /**
@@ -60,9 +38,7 @@ class ProductObserver
      */
     public function deleted(Product $product)
     {
-        $stripeClient = Utils::getStripeClient();
-        $stripeClient->products->delete($product->id);
-        ProductApi::findByProduct($product)->delete();
+        StripeHelper::destroyProduct($product);
     }
 
     /**

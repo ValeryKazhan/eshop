@@ -16,7 +16,7 @@
         <x-categories-grid-four
             :categories="$categories"
         />
-        <div style="justify-content: center">
+        <div class="justify-content-center">
             {{$categories->links()}}
         </div>
 
