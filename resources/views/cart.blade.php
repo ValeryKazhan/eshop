@@ -1,11 +1,11 @@
 <x-layout :cart="$purchases" title="Cart">
 
     <x-start-banner
-        :header="'Shopping Cart'"
-        :pageName="'Shopping Cart'"
+        :header="'Shopping SessionCart'"
+        :pageName="'Shopping SessionCart'"
     />
 
-    <!--================Cart Area =================-->
+    <!--================SessionCart Area =================-->
     <section class="cart_area">
         <div class="container">
             <div class="cart_inner">

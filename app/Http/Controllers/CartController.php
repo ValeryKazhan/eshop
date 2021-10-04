@@ -2,45 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
+//use App\Models\Cart;
+use App\Services\Cart\Cart;
 use App\Models\Product;
 use App\Models\Purchase;
+use App\Providers\CartServiceProvider;
+use App\Services\Cart\SessionCart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class CartController extends Controller
 {
 
-    public function add(Product $product, Request $request){
 
 
-        request()->merge(['id' => $product->id]);
+    public function add(Cart $cart, Product $product, Request $request){
+
+        $request->merge(['id' => $product->id]);
         $attributes = $request->validate([
             'id' => ['required', Rule::exists('products', 'id')],
             'number' => ['required', 'digits_between:1,2']
         ]);
 
-        Cart::addProduct(Product::find($attributes['id']), $attributes['number']);
+        $cart->addProduct(Product::query()->find($attributes['id']), $attributes['number']);
 
 
 
         return back();
     }
 
-    public function remove($id){
-        Cart::deletePurchase($id);
+    public function remove(Cart $cart, $id){
+        $cart->deletePurchase($id);
         return back();
     }
 
-    public function store(Request $request){
+    public function store(Cart $cart, Request $request){
         $purchases=$request->all();
         unset($purchases['_token']);
-        Cart::setPurchases(Purchase::toRelatedArray($purchases));
+        $cart->setPurchases(Purchase::toRelatedArray($purchases));
         return back();
     }
 
-    public function destroy(){
-        Cart::clear();
+    public function destroy(Cart $cart){
+        $cart->clear();
         return back();
     }
 

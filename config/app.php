@@ -174,9 +174,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-
         Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
+        \App\Providers\CartServiceProvider::class,
     ],
 
     /*

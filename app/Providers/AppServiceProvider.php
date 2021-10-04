@@ -29,7 +29,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        Cashier::calculateTaxes();
         StripeHelper::setSecretKey();
         Paginator::useBootstrap();
 

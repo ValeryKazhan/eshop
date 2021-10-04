@@ -27,8 +27,8 @@ use Laravel\Cashier\Http\Controllers\PaymentController;
 |
 */
 
-Route::get('dump', function (){
-    dd(redirect()->route('succeeded')->getTargetUrl());
+Route::get('dump', function (\Illuminate\Http\Request $request){
+    dd($request->session()->all());
 });
 
 Route::get('/', [PagesController::class, 'index']);

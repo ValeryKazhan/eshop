@@ -1,4 +1,4 @@
-@props(['name' => 'Order Cart'])
+@props(['name' => 'Order SessionCart'])
 
 <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
     <div class="confirmation-card">
