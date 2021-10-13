@@ -1,6 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Services;
+
+
+
+use App\Models\Product;
+use App\Models\Purchase;
 
 class Cart
 {

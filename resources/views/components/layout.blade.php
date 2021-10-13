@@ -1,6 +1,6 @@
 @props([
-    'cartItemsNumber'=> \App\Models\Cart::getItemsNumber(),
-    'cart'=> \App\Models\Cart::getPurchases(),
+    'cartItemsNumber'=> \App\Services\Cart::getItemsNumber(),
+    'cart'=> \App\Services\Cart::getPurchases(),
     'wishlist' => auth()->check() ? auth()->user()->wishlist : array(),
     'title'
     ])

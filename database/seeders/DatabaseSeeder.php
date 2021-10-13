@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Cart;
+use App\Services\Cart;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Order;
